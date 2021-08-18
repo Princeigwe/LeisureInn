@@ -96,7 +96,17 @@
                                         <p class="gray-text">ROOM {{room.room_number}} </p>
                                     </div>
                                     <div class="tm-tours-box-1-info-right">
-                                        <p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	
+                                        <p class="gray-text tours-1-description">
+                                            <b>Amenities</b>
+                                            <ul>
+                                                <li>{{room.amenities_type.first_item}}</li>
+                                                <li>{{room.amenities_type.second_item}}</li>
+                                                <li>{{room.amenities_type.third_item}}</li>
+                                                <li>{{room.amenities_type.fourth_item}}</li>
+                                                <li>{{room.amenities_type.fifth_item}}</li>
+                                            </ul>
+
+                                        </p>	
                                     </div>							
                                 </div>
                                 <div class="tm-tours-box-1-link">

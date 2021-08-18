@@ -4,7 +4,7 @@ from .models import Room
 # Create your views here.
 
 def home_featured_rooms(request):
-    featured_rooms = Room.objects.filter(room_price__range=[11000, 19000], is_available=True)
+    featured_rooms = Room.objects.filter(room_price__range=[11000, 18000], is_available=True)
     return render(request, 'home.html', {'featured_rooms':featured_rooms})
 
 def available_rooms(request):
