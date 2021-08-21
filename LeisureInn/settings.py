@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # local apps
     'pages.apps.PagesConfig',
     'rooms.apps.RoomsConfig',
+    'bookings.apps.BookingsConfig',
 ]
 
 MIDDLEWARE = [

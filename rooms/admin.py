@@ -7,6 +7,7 @@ from .models import Room, Amenities
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('room_number', 'room_type', 'room_price', 'is_available', 'amenities_type')
     list_filter = ('is_available', 'room_type')
+    search_fields = ['room_number']
 
 @admin.register(Amenities)
 class AmenitiesAdmin(admin.ModelAdmin):
