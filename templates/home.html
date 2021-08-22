@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
+
+<!-- loading static url -->
 {% load static %}
+<!-- loading crispy form -->
+{% load crispy_forms_tags %}
+<!-- loading embedded bootstrap -->
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+<!-- adding date picker to form -->
+{{form.media}}
 
 {% block title %}
     Home | Leisure Inn
@@ -24,11 +35,21 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="hotel">
                             <div class="tm-search-box effect2">
+
                                 <form action="" method="post" class="hotel-search-form">
                                     {% csrf_token %}
+                                    <div  class="tm-form-inner">
+                                        {{form|crispy}}
+                                    </div>
+                                    <div class="form-group tm-yellow-gradient-bg text-center">
+                                        <button type="submit"  class="tm-yellow-btn">Check Now</button>
+                                    </div>
+                                </form>
+                                <!-- <form action="" method="POST" class="hotel-search-form">
+                                    
                                     <div class="tm-form-inner">
                                         <div class="form-group">
-                                            <select class="form-control" name="room_type">
+                                            <select class="form-control">
                                                 <option value="">-- Select Room Type -- </option>
                                                 <option value="SINGLE ROOM">Single Room</option>
                                                 <option value="DOUBLE ROOM">Double Room</option>
@@ -38,7 +59,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="input-group date" id="datetimepicker1">
-                                                <input type="text" class="form-control" placeholder="Check-in Date" name="check_in">
+                                                <input type="text" class="form-control" placeholder="Check-in Date">
                                                 <span class="input-group-addon">
                                                     <span class="fa fa-calendar"></span>
                                                 </span>
@@ -46,7 +67,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="input-group date" id="datetimepicker2">
-                                                <input type="text" class="form-control" placeholder="Check-out Date" name="check_out">
+                                                <input type="text" class="form-control" placeholder="Check-out Date">
                                                 <span class="input-group-addon">
                                                     <span class="fa fa-calendar"></span>
                                                 </span>
@@ -54,9 +75,9 @@
                                         </div>
                                     </div>							
                                     <div class="form-group tm-yellow-gradient-bg text-center">
-                                        <button type="submit" name="submit" class="tm-yellow-btn">Check Now</button>
+                                        <button type="submit"  class="tm-yellow-btn">Check Now</button>
                                     </div>  
-                                </form>
+                                </form> -->
                             </div>
                         </div>
                     </div>

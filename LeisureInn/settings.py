@@ -44,6 +44,11 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'rooms.apps.RoomsConfig',
     'bookings.apps.BookingsConfig',
+    
+    # 3rd party apps
+    'crispy_forms',
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +146,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# DJANGO CRISPY FORM PACK
+CRISPY_TEMPLATE_PACK='bootstrap4'
+
+# BOOTSTRAP TO INCLUDE J-QUERY
+BOOTSTRAP4={
+    'include_jquery': True,
+}
