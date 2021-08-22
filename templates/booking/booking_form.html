@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+<!-- loading embedded bootstrap -->
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+
+<!-- adding date picker to form -->
+{{form.media}}
+
+{% block title %}
+    Booking | Leisure Inn
+{% endblock title %}
+
+
+{% block content %}
+    <h3>Book your Room...</h3>
+    <form action="" method="post" class="hotel-search-form">
+        <div class="tm-form-inner container">
+            {% csrf_token %}
+            {{form|crispy}}
+        </div>
+        <div class="form-group tm-yellow-gradient-bg text-center">
+            <button type="submit"  class="tm-yellow-btn">Check Now</button>
+        </div>
+    </form>
+{% endblock content %}

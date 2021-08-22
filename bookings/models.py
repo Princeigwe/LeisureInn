@@ -12,4 +12,4 @@ class Booking(models.Model):
     amount = models.DecimalField(max_digits=9, decimal_places=2)
     
     def __str__(self):
-        return self.room
+        return str(self.room)
