@@ -7,6 +7,9 @@ name = "pypi"
 django = "==3.1.4"
 psycopg2-binary = "*"
 pillow = "*"
+django-crispy-forms = "*"
+django-bootstrap-datepicker-plus = "*"
+django-bootstrap4 = "*"
 
 [dev-packages]
 
