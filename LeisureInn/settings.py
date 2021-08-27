@@ -154,3 +154,6 @@ CRISPY_TEMPLATE_PACK='bootstrap4'
 BOOTSTRAP4={
     'include_jquery': True,
 }
+
+# CELERY BROKER_URL TO CONNECT WITH RABBITMQ
+CELERY_BROKER_URL = "ampq://guest:guest@localhost:5672//"

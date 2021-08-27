@@ -1,12 +1,35 @@
 version: '3'
 
 services: 
+    # rabbitmq service container
+    rabbitmq:
+        image: rabbitmq:3.9-management-alphine
+        container_name: rabbitmq
+        ports: 
+            - 5672:5672
+            - 15672:15672
+        volumes: 
+            - ./.docker-conf/rabbitmq/data/:/var/lib/rabbitmq
+            - ./.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+
+    # celery service container
+    celery:
+        build: .
+        container_name: celery_LeisureInn
+        command: celery -A LeisureInn worker -l info
+        volumes: 
+            - .:/code
+        depends_on: 
+            - rabbitmq
+
+    # database(db) service container
     db:
         image: postgres
         volumes:
             - ./data/db:/var/lib/postgresql/data
         
 
+    # web service container
     web:
         build: .
         command: python /code/manage.py runserver 0.0.0.0:8000
@@ -16,3 +39,5 @@ services:
             - 8000:8000
         depends_on: 
             - db
+        links: 
+            - rabbitmq  # so that web service knows about rabbitmq service
