@@ -156,4 +156,5 @@ BOOTSTRAP4={
 }
 
 # CELERY BROKER_URL TO CONNECT WITH RABBITMQ
-CELERY_BROKER_URL = "ampq://guest:guest@localhost:5672//"
+# CELERY_BROKER_URL = "amqp://guest:guest@0.0.0.0:5672//"
+CELERY_BROKER_URL = "amqp://guest:guest@rabbitmq:5672/"

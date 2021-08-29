@@ -3,19 +3,16 @@ version: '3'
 services: 
     # rabbitmq service container
     rabbitmq:
-        image: rabbitmq:3.9-management-alphine
-        container_name: rabbitmq
+        image: rabbitmq:3.9-management-alpine
+        container_name: 'rabbitmq'
         ports: 
             - 5672:5672
             - 15672:15672
-        volumes: 
-            - ./.docker-conf/rabbitmq/data/:/var/lib/rabbitmq
-            - ./.docker-conf/rabbitmq/log/:/var/log/rabbitmq
 
     # celery service container
     celery:
         build: .
-        container_name: celery_LeisureInn
+        container_name: 'celery_LeisureInn'
         command: celery -A LeisureInn worker -l info
         volumes: 
             - .:/code
