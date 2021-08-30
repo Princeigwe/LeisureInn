@@ -13,7 +13,7 @@ services:
     celery:
         build: .
         container_name: 'celery_LeisureInn'
-        command: celery -A LeisureInn worker -l info
+        command: celery -A LeisureInn worker --loglevel=info
         volumes: 
             - .:/code
         depends_on: 

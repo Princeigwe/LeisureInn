@@ -11,6 +11,7 @@ django-crispy-forms = "*"
 django-bootstrap-datepicker-plus = "*"
 django-bootstrap4 = "*"
 celery = "*"
+flower = "*"
 
 [dev-packages]
 

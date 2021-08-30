@@ -3,6 +3,7 @@ from .models import Booking
 from .forms import BookingForm
 from rooms.models import Room
 import datetime
+from .tasks import booking_confirmation_email
 
 # Create your views here.
 
@@ -16,6 +17,7 @@ def booking_process(request, room_id):
             booking.room = room
             booking.guest_firstname = form.cleaned_data.get('guest_firstname')
             booking.guest_lastname = form.cleaned_data.get('guest_lastname')
+            booking.guest_email = form.cleaned_data.get('guest_email')
             booking.amount = form.cleaned_data.get('amount')
             booking.check_in = request.session["check_in_data"]
             booking.check_out = request.session["check_out_data"]
@@ -34,6 +36,9 @@ def booking_process(request, room_id):
                 del request.session["check_in_data"]
                 del request.session["check_out_data"]
                 del request.session["room_type_data"]
+                
+                booking_confirmation_email.delay(room.id, booking.id) # launching aynctask
+
                 
                 return redirect('bookings:booking_successful')
             

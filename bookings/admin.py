@@ -7,7 +7,7 @@ from rooms.models import Room
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ['room_number', 'guest_firstname', 'guest_lastname', 'check_in', 'check_out', 'amount']
+    list_display = ['room_number', 'guest_firstname', 'guest_lastname', 'guest_email', 'check_in', 'check_out', 'amount']
     search_fields = ['guest_firstname', 'guest_lastname']
     
     # for displaying the room number in the list_display

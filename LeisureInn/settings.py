@@ -158,3 +158,7 @@ BOOTSTRAP4={
 # CELERY BROKER_URL TO CONNECT WITH RABBITMQ
 # CELERY_BROKER_URL = "amqp://guest:guest@0.0.0.0:5672//"
 CELERY_BROKER_URL = "amqp://guest:guest@rabbitmq:5672/"
+CELERY_RESULT_BACKEND = 'rpc://'
+
+# EMAIL SETTINGS
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
