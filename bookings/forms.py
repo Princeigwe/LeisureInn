@@ -19,4 +19,4 @@ class CheckingForm(forms.Form):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['guest_firstname', 'guest_lastname', 'amount']
+        fields = ['guest_firstname', 'guest_lastname', 'guest_email', 'amount']
