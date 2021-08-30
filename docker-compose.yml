@@ -18,6 +18,19 @@ services:
             - .:/code
         depends_on: 
             - rabbitmq
+    
+    # for monitoring celery operation
+    flower:
+        build: .
+        container_name: 'celery_flower'
+        command: celery -A LeisureInn flower
+        volumes:
+            - .:/code
+        ports:
+            - 5555:5555
+        depends_on: 
+            - celery
+            - rabbitmq
 
     # database(db) service container
     db:
