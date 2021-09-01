@@ -22,7 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('pages/', include('pages.urls', namespace='pages')),
     path('', include('rooms.urls', namespace='rooms')),
-    path('book/', include('bookings.urls', namespace='bookings'))
+    path('book/', include('bookings.urls', namespace='bookings')),
+    path('payment/', include('payments.urls', namespace='payments'))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
