@@ -18,6 +18,7 @@ def booking_process(request, room_id):
             booking.guest_firstname = form.cleaned_data.get('guest_firstname')
             booking.guest_lastname = form.cleaned_data.get('guest_lastname')
             booking.guest_email = form.cleaned_data.get('guest_email')
+            booking.guest_telephone = form.cleaned_data.get('guest_telephone')
             booking.amount = form.cleaned_data.get('amount')
             booking.check_in = request.session["check_in_data"]
             booking.check_out = request.session["check_out_data"]
@@ -38,9 +39,9 @@ def booking_process(request, room_id):
                 del request.session["room_type_data"]
                 
                 booking_confirmation_email.delay(room.id, booking.id) # launching aynctask
-
                 
-                return redirect('bookings:booking_successful')
+                #return redirect('bookings:booking_successful')
+                return redirect('payments:process', booking.id) # redirecting to the payment url with booking id
             
             else:
                 return redirect('bookings:booking_failed')
