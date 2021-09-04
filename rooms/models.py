@@ -42,6 +42,7 @@ class Room(models.Model):
     room_picture = models.ImageField(upload_to='room_pictures/', default='')
     room_type = models.CharField(max_length=20, choices=ROOM_TYPES, default='SINGLE ROOM' )
     is_available = models.BooleanField(default=True)
+    is_booked = models.BooleanField(default=False)
     room_price = models.DecimalField(max_digits=9, decimal_places=2, default='1000.00')
     amenities_type = models.ForeignKey(Amenities, null=True, on_delete=models.SET_NULL,)
     

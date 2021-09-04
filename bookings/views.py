@@ -18,9 +18,12 @@ def booking_process(request, room_id):
             booking.guest_firstname = form.cleaned_data.get('guest_firstname')
             booking.guest_lastname = form.cleaned_data.get('guest_lastname')
             booking.guest_email = form.cleaned_data.get('guest_email')
+            booking.guest_telephone = form.cleaned_data.get('guest_telephone')
             booking.amount = form.cleaned_data.get('amount')
             booking.check_in = request.session["check_in_data"]
             booking.check_out = request.session["check_out_data"]
+            
+            request.session['room_id_data'] = room.id
             
             # conversion string format of check dates to date type data
             date_book_check_in = datetime.datetime.strptime(booking.check_in, "%Y-%m-%d").date()
@@ -32,15 +35,11 @@ def booking_process(request, room_id):
             
             if amount_written == amount_to_pay :
                 booking.save()
-                # deleting session data
-                del request.session["check_in_data"]
-                del request.session["check_out_data"]
-                del request.session["room_type_data"]
-                
-                booking_confirmation_email.delay(room.id, booking.id) # launching aynctask
 
+                booking_confirmation_email.delay(room.id, booking.id) # launching aynctask
                 
-                return redirect('bookings:booking_successful')
+                #return redirect('bookings:booking_successful')
+                return redirect('payments:process', booking.id) # redirecting to the payment url with booking id
             
             else:
                 return redirect('bookings:booking_failed')

@@ -37,12 +37,17 @@ services:
         image: postgres
         volumes:
             - ./data/db:/var/lib/postgresql/data
+        environment:
+            POSTGRES_HOST_AUTH_METHOD: "trust"
         
 
     # web service container
     web:
         build: .
         command: python /code/manage.py runserver 0.0.0.0:8000
+        environment: 
+            - FLUTTERWAVE_TEST_SECRET_KEY=${FLUTTERWAVE_TEST_SECRET_KEY}
+            - FLUTTERWAVE_TEST_PUBLIC_KEY=${FLUTTERWAVE_TEST_PUBLIC_KEY}
         volumes: 
             - .:/code
         ports: 
