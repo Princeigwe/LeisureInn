@@ -13,6 +13,7 @@ class Booking(models.Model):
     check_in = models.DateField()
     check_out = models.DateField()
     amount = models.DecimalField(max_digits=9, decimal_places=2)
+    paid = models.BooleanField(default=False)
     
     def __str__(self):
         return str(self.room)

@@ -33,11 +33,7 @@ def booking_process(request, room_id):
             
             if amount_written == amount_to_pay :
                 booking.save()
-                # deleting session data
-                del request.session["check_in_data"]
-                del request.session["check_out_data"]
-                del request.session["room_type_data"]
-                
+
                 booking_confirmation_email.delay(room.id, booking.id) # launching aynctask
                 
                 #return redirect('bookings:booking_successful')
