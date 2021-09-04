@@ -23,6 +23,8 @@ def booking_process(request, room_id):
             booking.check_in = request.session["check_in_data"]
             booking.check_out = request.session["check_out_data"]
             
+            request.session['room_id_data'] = room.id
+            
             # conversion string format of check dates to date type data
             date_book_check_in = datetime.datetime.strptime(booking.check_in, "%Y-%m-%d").date()
             date_book_check_out = datetime.datetime.strptime(booking.check_out, "%Y-%m-%d").date()

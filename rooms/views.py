@@ -39,5 +39,5 @@ def available_rooms(request):
 def check_room_availability(request):
     """checking room type based on room type session key"""
     room_type = request.session["room_type_data"]
-    available_rooms = Room.objects.filter(room_type=room_type)
+    available_rooms = Room.objects.filter(is_available=True, room_type=room_type)
     return render(request, 'rooms/rooms.html', {'available_rooms':available_rooms})
