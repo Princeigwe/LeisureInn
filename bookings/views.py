@@ -12,7 +12,6 @@ def booking_process(request, room_id):
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
-            # form.save(commit=False)
             booking = form.save(commit=False)
             booking.room = room
             booking.guest_firstname = form.cleaned_data.get('guest_firstname')
