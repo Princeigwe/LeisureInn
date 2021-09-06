@@ -58,7 +58,7 @@ INSTALLED_APPS = [
 SITE_ID = 1 # number of 3rd party account site
 
 AUTHENTICATION_BACKENDS = [
-    #'django.contrib.auth.backends.ModelBackend', # django's default mode of authenticating user
+    'django.contrib.auth.backends.ModelBackend', # django's default mode of authenticating user
     'allauth.account.auth_backends.AuthenticationBackend' # making django-allauth authentication mode default
 ]
 
