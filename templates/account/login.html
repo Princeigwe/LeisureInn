@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+<!-- loading static url -->
+{% load static %}
+<!-- loading crispy form -->
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+    Login | Leisure Inn
+{% endblock title %}
+
+
+{% block content %}
+
+    <div class='container'>
+        <form method="post">
+            {% csrf_token %}
+            <div class="tm-form-inner">
+                {{form|crispy}}
+            </div>
+            <div class="form-group tm-yellow-gradient-bg text-center">
+                <button type="submit"  class="tm-yellow-btn">LOGIN</button>
+            </div>
+        </form>
+        <a href=" {% url 'account_signup' %} ">SIGN UP</a>
+    </div>
+
+{% endblock content %}
+

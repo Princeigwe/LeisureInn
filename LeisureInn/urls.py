@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')), ## django-allauth url for user management
     path('pages/', include('pages.urls', namespace='pages')),
     path('', include('rooms.urls', namespace='rooms')),
     path('book/', include('bookings.urls', namespace='bookings')),

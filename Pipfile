@@ -12,6 +12,7 @@ django-bootstrap-datepicker-plus = "*"
 django-bootstrap4 = "*"
 celery = "*"
 flower = "*"
+django-allauth = "*"
 
 [dev-packages]
 
