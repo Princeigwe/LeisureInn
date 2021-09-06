@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+<!-- loading static url -->
+{% load static %}
+<!-- loading crispy form -->
+{% load crispy_forms_tags %}
+
+{% load account %}
+{% load i18n %}
+
+{% block title %}
+    Confirm Email | Leisure Inn
+{% endblock title %}
+
+
+{% block content %}
+    
+    <h3> {% trans 'Confirm Email Address' %} </h3>
+
+    
+    {% if confirmation %}
+    {% user_display confirmation.email_address.user as user_display %}
+
+    <div class='container'>
+        <p> 
+            {% blocktrans with confirmation.email_address as email %}
+                Please confirm that <a href="mailto:{{email}} "> {{email}} </a> is the email address for {{user_display}}
+            {% endblocktrans %}
+        </p>
+    
+        <form action=" {% url 'account_confirm_email' confirmation.key %} ">
+            {% csrf_token %}
+            <button class="tm-yellow-btn" type="submit" > {% trans 'Confirm' %} </button>
+        </form>
+    </div>
+
+    {% else %}
+
+    <p>
+        {% url 'account_email' as email_url %}
+        {% blocktrans %}
+            This confirmation link is either invalid or expired. Please <a href={{email_url}}> issue a new confirmation request</a>
+        {% endblocktrans %}
+    </p>
+        
+    {% endif %}
+        
+    
+{% endblock content %}
+
