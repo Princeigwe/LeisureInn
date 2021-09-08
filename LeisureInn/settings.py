@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rooms.apps.RoomsConfig',
     'bookings.apps.BookingsConfig',
     'payments.apps.PaymentsConfig',
+    'user.apps.UserConfig',
     
     # 3rd party apps
     'crispy_forms',
@@ -72,6 +73,10 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 
 ACCOUNT_SESSION_REMEMBER = True # to remember user login session
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'user.forms.AdditionalSignUpInfoForm' # adding the additional signUp form to django-allauth
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'rooms:home' # redirect url after email confirmation
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
