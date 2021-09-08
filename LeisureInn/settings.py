@@ -39,18 +39,44 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', # for 3rd party account site
     
     # local apps
     'pages.apps.PagesConfig',
     'rooms.apps.RoomsConfig',
     'bookings.apps.BookingsConfig',
     'payments.apps.PaymentsConfig',
+    'user.apps.UserConfig',
     
     # 3rd party apps
     'crispy_forms',
     'bootstrap4',
     'bootstrap_datepicker_plus',
+    'allauth',
+    'allauth.account', # a 3rd party account site
 ]
+
+SITE_ID = 1 # number of 3rd party account site
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend', # django's default mode of authenticating user
+    'allauth.account.auth_backends.AuthenticationBackend' # making django-allauth authentication mode default
+]
+
+LOGIN_REDIRECT_URL = 'rooms:home'
+ACCOUNT_LOGOUT_REDIRECT = 'rooms:home'
+
+# EXTRA DJANGO-ALLAUTH SETTINGS
+ACCOUNT_USERNAMEME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email' # authentication method done by email
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+
+ACCOUNT_SESSION_REMEMBER = True # to remember user login session
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'user.forms.AdditionalSignUpInfoForm' # adding the additional signUp form to django-allauth
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'rooms:home' # redirect url after email confirmation
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -163,6 +189,7 @@ CELERY_RESULT_BACKEND = 'rpc://'
 
 # EMAIL SETTINGS
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'leisureinnco@gmail.com' # the email sender email address
 
 
 # FLUTTERWAVE KEYS
