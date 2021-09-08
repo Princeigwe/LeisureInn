@@ -4,9 +4,11 @@ from .forms import BookingForm
 from rooms.models import Room
 import datetime
 from .tasks import booking_confirmation_email
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+@login_required
 def booking_process(request, room_id):
     room = get_object_or_404(Room, id=room_id)
     if request.method == 'POST':
@@ -14,9 +16,9 @@ def booking_process(request, room_id):
         if form.is_valid():
             booking = form.save(commit=False)
             booking.room = room
-            booking.guest_firstname = form.cleaned_data.get('guest_firstname')
-            booking.guest_lastname = form.cleaned_data.get('guest_lastname')
-            booking.guest_email = form.cleaned_data.get('guest_email')
+            booking.guest_firstname = request.user.first_name
+            booking.guest_lastname = request.user.last_name
+            booking.guest_email = request.user.email
             booking.guest_telephone = form.cleaned_data.get('guest_telephone')
             booking.amount = form.cleaned_data.get('amount')
             booking.check_in = request.session["check_in_data"]
@@ -47,9 +49,10 @@ def booking_process(request, room_id):
         form = BookingForm()
     return render(request, 'booking/booking_form.html', {'form': form})
 
-
+@login_required
 def booking_failed(request):
     return render(request, 'booking/booking_failed.html')
 
+@login_required
 def booking_successful(request):
     return render(request, 'booking/booking_successful.html')
