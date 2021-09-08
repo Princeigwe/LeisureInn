@@ -12,6 +12,7 @@ class Booking(models.Model):
     checked_in = models.BooleanField(default=False)
     check_in = models.DateField()
     check_out = models.DateField()
+    checked_out = models.BooleanField(default=False)
     amount = models.DecimalField(max_digits=9, decimal_places=2)
     paid = models.BooleanField(default=False)
     
