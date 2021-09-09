@@ -13,6 +13,7 @@ django-bootstrap4 = "*"
 celery = "*"
 flower = "*"
 django-allauth = "*"
+pinax-messages = "*"
 
 [dev-packages]
 

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'allauth',
     'allauth.account', # a 3rd party account site
+    'pinax.messages',
 ]
 
 SITE_ID = 1 # number of 3rd party account site
