@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 
 from pathlib import Path
+from django.contrib.auth import get_user_model
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,7 +55,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'allauth',
     'allauth.account', # a 3rd party account site
-    'pinax.messages',
+    "pinax.messages",
 ]
 
 SITE_ID = 1 # number of 3rd party account site
@@ -109,6 +110,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LeisureInn.wsgi.application'
 
+AUTH_USER_MODEL = 'bookings.PinaxUser'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

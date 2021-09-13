@@ -1,6 +1,8 @@
 from django.db import models
 from rooms.models import Room
 
+from django.contrib.auth.models import AbstractUser
+
 # Create your models here.
 
 class Booking(models.Model):
@@ -18,3 +20,8 @@ class Booking(models.Model):
     
     def __str__(self):
         return str(self.room)
+
+
+## user model that will be used for pinax-messages
+class PinaxUser(AbstractUser):
+    pass
