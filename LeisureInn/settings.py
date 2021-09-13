@@ -103,6 +103,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                #3rd party context processor
+                "pinax.messages.context_processors.user_messages"
             ],
         },
     },
@@ -110,7 +113,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LeisureInn.wsgi.application'
 
-AUTH_USER_MODEL = 'bookings.PinaxUser'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

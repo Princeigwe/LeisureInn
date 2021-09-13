@@ -21,7 +21,3 @@ class Booking(models.Model):
     def __str__(self):
         return str(self.room)
 
-
-## user model that will be used for pinax-messages
-class PinaxUser(AbstractUser):
-    pass
