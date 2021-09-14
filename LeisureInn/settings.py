@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'rooms.apps.RoomsConfig',
     'bookings.apps.BookingsConfig',
     'payments.apps.PaymentsConfig',
-    'user.apps.UserConfig',
+    'users.apps.UsersConfig',
     
     # 3rd party apps
     'crispy_forms',
@@ -60,6 +60,8 @@ INSTALLED_APPS = [
 
 SITE_ID = 1 # number of 3rd party account site
 
+AUTH_USER_MODEL = 'users.CustomUser'
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend', # django's default mode of authenticating user
     'allauth.account.auth_backends.AuthenticationBackend' # making django-allauth authentication mode default
@@ -69,14 +71,17 @@ LOGIN_REDIRECT_URL = 'rooms:home'
 ACCOUNT_LOGOUT_REDIRECT = 'rooms:home'
 
 # EXTRA DJANGO-ALLAUTH SETTINGS
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email' # authentication method done by email
-ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+
+ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
 
 ACCOUNT_SESSION_REMEMBER = True # to remember user login session
 
-ACCOUNT_SIGNUP_FORM_CLASS = 'user.forms.AdditionalSignUpInfoForm' # adding the additional signUp form to django-allauth
+ACCOUNT_SIGNUP_FORM_CLASS = 'users.forms.AdditionalSignUpInfoForm' # adding the additional signUp form to django-allauth
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'rooms:home' # redirect url after email confirmation
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
