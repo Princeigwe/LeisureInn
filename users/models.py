@@ -19,10 +19,16 @@ class CustomUser(AbstractUser):
         return self.email
 
 
-class Reservation(models.Model):
+class GuestReservationList(models.Model):
     guest = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
     
     def __str__(self):
         return str(self.guest.first_name + self.guest.last_name)
 
+
+class ReservationItem(models.Model):
+    reservation_list = models.ForeignKey(GuestReservationList, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return str(self.room.number)

@@ -1,4 +1,4 @@
-from .models import Reservation, CustomUser
+from .models import GuestReservationList, CustomUser
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
@@ -6,4 +6,4 @@ from django.db.models.signals import post_save
 @receiver(post_save, sender=CustomUser)
 def create_reservation_list(sender, instance, created, **kwargs):
     if created:
-        Reservation.objects.create(guest=instance)
+        GuestReservationList.objects.create(guest=instance)
