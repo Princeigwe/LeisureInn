@@ -29,7 +29,8 @@ urlpatterns = [
     path('pages/', include('pages.urls', namespace='pages')),
     path('', include('rooms.urls', namespace='rooms')),
     path('book/', include('bookings.urls', namespace='bookings')),
-    path('payment/', include('payments.urls', namespace='payments'))
+    path('payment/', include('payments.urls', namespace='payments')), 
+    path('guest_reservations/', include('guest_reservations.urls', namespace='guest_reservations')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

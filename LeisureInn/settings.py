@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'bookings.apps.BookingsConfig',
     'payments.apps.PaymentsConfig',
     'users.apps.UsersConfig',
+    'guest_reservations.apps.GuestReservationsConfig',
     
     # 3rd party apps
     'crispy_forms',

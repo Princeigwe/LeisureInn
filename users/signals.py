@@ -1,4 +1,5 @@
-from .models import GuestReservationList, CustomUser
+from .models import CustomUser
+from guest_reservations.models import GuestReservationList
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 

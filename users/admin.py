@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import CustomUser, GuestReservationList, ReservationItem
+from .models import CustomUser
 # Register your models here.
 
 class CustomUserAdmin(UserAdmin):
@@ -22,15 +22,3 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email', )
 
 admin.site.register(CustomUser, CustomUserAdmin)
-
-class ReservationItemAdminInline(admin.TabularInline):
-    model = ReservationItem
-    list_display = ('room')
-
-class GuestReservationListAdmin(admin.ModelAdmin):
-    model = GuestReservationList
-    list_display = ['guest', ]
-    search_fields = ('guest', )
-    inlines = [ReservationItemAdminInline]
-
-admin.site.register(GuestReservationList, GuestReservationListAdmin)
