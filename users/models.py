@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from .managers import CustomUserManager
-
+from rooms.models import Room
 # Create your models here.
 
 class CustomUser(AbstractUser):
@@ -17,3 +17,12 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return self.email
+
+
+class Reservation(models.Model):
+    guest = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return str(self.guest.first_name + self.guest.last_name)
+

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import CustomUser
+from .models import CustomUser, Reservation
 # Register your models here.
 
 class CustomUserAdmin(UserAdmin):
@@ -22,3 +22,11 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email', )
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+class ReservationAdmin(admin.ModelAdmin):
+    model = Reservation
+    list_display = ['guest', 'room']
+    search_fields = ('guest', )
+
+admin.site.register(Reservation, ReservationAdmin)
