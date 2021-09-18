@@ -10,8 +10,7 @@ from bookings.models import Booking
 def all_reservations(request):
     """ function to get all reservations of the logged in guest """
     guest_reservations = ReservationItem.objects.all()
-    context = {'guest_reservations': guest_reservations}
-    return render(request, 'reservations.html', context=context)
+    return render(request, 'guest_reservation/reservations.html', {'guest_reservations': guest_reservations})
 
 
 # add_to_reservations function executed in the payment_successful view function of payment app
