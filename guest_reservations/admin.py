@@ -6,12 +6,12 @@ from .models import ReservationItem, GuestReservationList
 
 class ReservationItemAdminInline(admin.TabularInline):
     model = ReservationItem
-    list_display = ('booking')
+    fields = ['booking', ]
 
 class GuestReservationListAdmin(admin.ModelAdmin):
+    inlines = [ReservationItemAdminInline]
     model = GuestReservationList
     list_display = ['guest', ]
     search_fields = ('guest', )
-    inlines = [ReservationItemAdminInline]
 
 admin.site.register(GuestReservationList, GuestReservationListAdmin)

@@ -19,5 +19,5 @@ class Booking(models.Model):
     paid = models.BooleanField(default=False)
     
     def __str__(self):
-        return str(self.room)
+        return str(self.room.room_number)
 

@@ -17,4 +17,4 @@ class ReservationItem(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE, default = None)
     
     def __str__(self):
-        return str(self.room.number)
+        return str(self.booking.room.room_number)

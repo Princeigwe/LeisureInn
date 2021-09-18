@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import ReservationItem, GuestReservationList
 from bookings.models import Booking
@@ -14,12 +14,14 @@ def all_reservations(request):
     return render(request, 'reservations.html', context=context)
 
 
-@login_required
-def add_to_reservations(request, booking_id):
-    reservation_list = get_object_or_404(GuestReservationList, guest=request.user)
-    booking = get_object_or_404(Booking, id=booking_id)
-    reservation_item = ReservationItem.objects.create(reservation_list=reservation_list, booking=booking)
-    pass
+# add_to_reservations function executed in the payment_successful view function of payment app
+
+# @login_required
+# def add_to_reservations(request, booking_id):
+#     reservation_list = get_object_or_404(GuestReservationList, guest=request.user)
+#     booking = get_object_or_404(Booking, id=booking_id)
+#     reservation_item = ReservationItem.objects.create(reservation_list=reservation_list, booking=booking)
+#     return redirect('guest_reservations:all_reservations')
 
 
 @login_required

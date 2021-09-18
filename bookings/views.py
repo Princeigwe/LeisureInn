@@ -5,6 +5,7 @@ from rooms.models import Room
 import datetime
 from .tasks import booking_confirmation_email
 from django.contrib.auth.decorators import login_required
+from guest_reservations.models import ReservationItem, GuestReservationList
 
 # Create your views here.
 
@@ -36,8 +37,13 @@ def booking_process(request, room_id):
             
             if amount_written == amount_to_pay :
                 booking.save()
+                
+                # creating booking id session data that will be used for adding reservation to reservation list
+                # the reservation addition function will take place in  booking_successful view function
+                request.session["booking_id_data"] = booking.id
+                
 
-                booking_confirmation_email.delay(room.id, booking.id) # launching aynctask
+                booking_confirmation_email.delay(room.id, booking.id) # launching aynctask to celery
                 
                 #return redirect('bookings:booking_successful')
                 return redirect('payments:process', booking.id) # redirecting to the payment url with booking id
