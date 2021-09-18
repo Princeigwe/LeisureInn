@@ -25,13 +25,17 @@ def all_reservations(request):
 
 
 @login_required
-def delete_reservation(request):
-    pass
+def delete_reservation(request, reservation_item_id):
+    reservation_item = get_object_or_404(ReservationItem, id=reservation_item_id)
+    reservation_item.delete()
+    return redirect('guest_reservations:all_reservations')
 
 
 @login_required
 def clear_reservations(request):
-    pass
+    reservation_items = ReservationItem.objects.all()
+    reservation_items.delete()
+    return redirect('guest_reservations:all_reservations')
 
 
 # thinkung of switching reservations, but can't come up with an idea yet.

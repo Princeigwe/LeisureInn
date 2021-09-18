@@ -30,7 +30,7 @@ def payment_successful(request, id):
     booking.paid = True
     booking.save()
     
-    # reservation process here###
+    #process of adding booking reservation list here###
     booking_id = request.session['booking_id_data']
     reservation_list = get_object_or_404(GuestReservationList, guest=request.user)
     booking = get_object_or_404(Booking, id=booking_id)
@@ -49,6 +49,7 @@ def payment_successful(request, id):
     del request.session["check_out_data"]
     del request.session["room_type_data"]
     del request.session['room_id_data']
+    del request.session['booking_id_data']
     
     return render(request, 'payment/payment_successful.html', {'id':id})
 

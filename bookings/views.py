@@ -39,7 +39,7 @@ def booking_process(request, room_id):
                 booking.save()
                 
                 # creating booking id session data that will be used for adding reservation to reservation list
-                # the reservation addition function will take place in  booking_successful view function
+                # the reservation addition function will take place in  payment_successful view function
                 request.session["booking_id_data"] = booking.id
                 
 
