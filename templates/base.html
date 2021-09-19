@@ -44,8 +44,8 @@ http://www.templatemo.com/tm-475-holiday
                         <ul>
                             <!-- <li><a href=" {% url 'rooms:home' %} " class="active">Home</a></li> -->
                             <li><a href=" {% url 'rooms:home' %} ">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href=" {% url 'rooms:available_rooms' %} ">Our Rooms</a></li>
+                            <li class="dropdown"><a href="#">Account</a></li>
+                            <li><a href=" {% url 'guest_reservations:all_reservations' %} ">Reservations</a></li>
                             <li>
                                 
                                 {% if user.is_authenticated %}

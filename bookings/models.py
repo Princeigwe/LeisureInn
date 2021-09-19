@@ -1,6 +1,8 @@
 from django.db import models
 from rooms.models import Room
 
+from django.contrib.auth.models import AbstractUser
+
 # Create your models here.
 
 class Booking(models.Model):
@@ -17,4 +19,5 @@ class Booking(models.Model):
     paid = models.BooleanField(default=False)
     
     def __str__(self):
-        return str(self.room)
+        return str(self.room.room_number)
+

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 
 from pathlib import Path
+from django.contrib.auth import get_user_model
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,7 +47,8 @@ INSTALLED_APPS = [
     'rooms.apps.RoomsConfig',
     'bookings.apps.BookingsConfig',
     'payments.apps.PaymentsConfig',
-    'user.apps.UserConfig',
+    'users.apps.UsersConfig',
+    'guest_reservations.apps.GuestReservationsConfig',
     
     # 3rd party apps
     'crispy_forms',
@@ -54,9 +56,12 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'allauth',
     'allauth.account', # a 3rd party account site
+    "pinax.messages",
 ]
 
 SITE_ID = 1 # number of 3rd party account site
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend', # django's default mode of authenticating user
@@ -67,14 +72,17 @@ LOGIN_REDIRECT_URL = 'rooms:home'
 ACCOUNT_LOGOUT_REDIRECT = 'rooms:home'
 
 # EXTRA DJANGO-ALLAUTH SETTINGS
-ACCOUNT_USERNAMEME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email' # authentication method done by email
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email' # authentication method done by email
 ACCOUNT_UNIQUE_EMAIL = True
+
+ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
 
 ACCOUNT_SESSION_REMEMBER = True # to remember user login session
 
-ACCOUNT_SIGNUP_FORM_CLASS = 'user.forms.AdditionalSignUpInfoForm' # adding the additional signUp form to django-allauth
+ACCOUNT_SIGNUP_FORM_CLASS = 'users.forms.AdditionalSignUpInfoForm' # adding the additional signUp form to django-allauth
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'rooms:home' # redirect url after email confirmation
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
@@ -101,6 +109,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                #3rd party context processor
+                "pinax.messages.context_processors.user_messages"
             ],
         },
     },
