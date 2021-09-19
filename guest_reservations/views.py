@@ -1,3 +1,4 @@
+from rooms.models import Room
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import ReservationItem, GuestReservationList
@@ -24,17 +25,10 @@ def all_reservations(request):
 
 
 @login_required
-def delete_reservation(request, reservation_item_id):
-    reservation_item = get_object_or_404(ReservationItem, id=reservation_item_id)
-    reservation_item.delete()
+def delete_reservation(request, reservation_id):
+    reservation = get_object_or_404(ReservationItem, id=reservation_id)
+    reservation.delete()
     return redirect('guest_reservations:all_reservations')
 
 
-@login_required
-def clear_reservations(request):
-    reservation_items = ReservationItem.objects.all()
-    reservation_items.delete()
-    return redirect('guest_reservations:all_reservations')
-
-
-# thinkung of switching reservations, but can't come up with an idea yet.
+# thinking of switching reservations, but can't come up with an idea yet.

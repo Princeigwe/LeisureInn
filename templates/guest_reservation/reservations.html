@@ -25,7 +25,7 @@
                                 <img src=" {{reservation.booking.room.room_picture.url}} " alt="image" class="img-responsive">
                                 <div class="tm-tours-box-1-info">
                                     <div class="tm-tours-box-1-info-left">
-                                        <p class="text-uppercase margin-bottom-20">{{room.room_type}}</p>	
+                                        <p class="text-uppercase margin-bottom-20">{{reservation.booking.room.room_type}}</p>	
                                         <p class="gray-text">ROOM {{reservation.booking.room.room_number}} </p>
                                     </div>
                                     <div class="tm-tours-box-1-info-right">
@@ -46,7 +46,7 @@
                                     <div class="tm-tours-box-1-link-left">
                                         <!-- N{{room.room_price}} / night -->
                                     </div>
-                                    <a href=" # " class="tm-tours-box-1-link-right">
+                                    <a href="{% url 'guest_reservations:delete_reservation' reservation.id %}" class="tm-tours-box-1-link-right">
                                         Cancel
                                     </a>							
                                 </div>
