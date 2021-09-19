@@ -27,6 +27,9 @@ def all_reservations(request):
 @login_required
 def delete_reservation(request, reservation_id):
     reservation = get_object_or_404(ReservationItem, id=reservation_id)
+    reservation_room = reservation.booking.room
+    reservation_room.is_available = True
+    reservation_room.save()
     reservation.delete()
     return redirect('guest_reservations:all_reservations')
 
