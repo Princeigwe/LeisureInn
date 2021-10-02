@@ -34,6 +34,8 @@ ALLOWED_HOSTS = ['0.0.0.0',]
 # Application definition
 
 INSTALLED_APPS = [
+    
+    # system apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites', # for 3rd party account site
+    
+    # local apps with Django Channels
+    
+    'channels',
+    'chat.apps.ChatConfig',
     
     # local apps
     'pages.apps.PagesConfig',
@@ -57,6 +64,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account', # a 3rd party account site
     "pinax.messages",
+    
 ]
 
 SITE_ID = 1 # number of 3rd party account site
@@ -118,6 +126,19 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'LeisureInn.wsgi.application'
+
+#Configuration for Channels
+ASGI_APPLICATION = "LeisureInn.asgi.application"
+# CHANNELS LAYER CONFIGURATION
+## connecting Channels to the redis server
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('redis', 6379)],
+        },
+    },
+}
 
 
 # Database

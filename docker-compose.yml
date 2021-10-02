@@ -4,7 +4,7 @@ services:
     # rabbitmq service container
     rabbitmq:
         image: rabbitmq:3.9-management-alpine
-        container_name: 'rabbitmq'
+        container_name: 'LeisuureInn_rabbitmq'
         ports: 
             - 5672:5672
             - 15672:15672
@@ -35,15 +35,25 @@ services:
     # database(db) service container
     db:
         image: postgres
+        container_name: "LeisureInn_db"
         volumes:
             - ./data/db:/var/lib/postgresql/data
         environment:
             POSTGRES_HOST_AUTH_METHOD: "trust"
-        
+
+    # redis service container
+    redis:
+        image: redis:6.2
+        container_name: 'LeisureInn_redis'
+        command: redis-server
+        ports: 
+            - 6379:6379
+
 
     # web service container
     web:
         build: .
+        container_name: 'LeisureInn_web'
         command: python /code/manage.py runserver 0.0.0.0:8000
         environment: 
             - FLUTTERWAVE_TEST_SECRET_KEY=${FLUTTERWAVE_TEST_SECRET_KEY}
@@ -56,3 +66,4 @@ services:
             - db
         links: 
             - rabbitmq  # so that web service knows about rabbitmq service
+            - redis # so theat web service knows about redis service
