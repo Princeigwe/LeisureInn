@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from .models import GuestChatRoom
+from .models import GuestChatRoom, Message
 from users.models import CustomUser
+from .forms import MessageForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -17,19 +19,18 @@ def room_testing(request):
     pass
 
 
+@login_required
 def rooms(request):
-    # chat_room = get_object_or_404(GuestChatRoom, id=room_id)
     user = request.user
-    adminuser = CustomUser.is_superuser = True
-    
     # getting all chatrooms...
     if user.is_superuser:
-        rooms = GuestChatRoom.objects.all().exclude(user=request.user) # if logged in user is an admin, get all rooms apart from his own
+        rooms = GuestChatRoom.objects.filter(admin = user) # if logged in user is an admin, get all chat rooms related to him
     else:
-        rooms = GuestChatRoom.objects.filter(user = adminuser)
-    
-    # # choosing a room
-    # picked_room = get_object_or_404(GuestChatRoom, id=room_id)
-    
-    
-    return render(request,'guest_chatroom/index.html', {'rooms': rooms})
+        rooms = GuestChatRoom.objects.filter(guest = user)
+    return render(request,'guest_chatroom/chat_list.html', {'rooms': rooms})
+
+
+@login_required
+def room_messages(request, room_id):
+    room = get_object_or_404(GuestChatRoom, id=room_id)
+    return render(request, 'guest_chatroom/chat_detail.html', {'room_id': room.id })
