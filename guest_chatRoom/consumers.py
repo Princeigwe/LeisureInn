@@ -1,11 +1,28 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer
-from asgiref.sync import async_to_sync  # package for converting async methods to sync
+from asgiref.sync import async_to_sync
+from guest_chatRoom.views import room_messages
+
+from users.models import CustomUser  # package for converting async methods to sync
+from .models import Message, GuestChatRoom
 
 class ChatConsumer(WebsocketConsumer):
+    
+    def fetch_messages(self, data):
+        pass
+    
+    def new_message(self, data):
+        pass
+    
+    command = {
+        'fetch_messages': fetch_messages,
+        'new_message': new_message,
+    }
+        
     def connect(self):
         self.room_ID = self.scope['url_route']['kwargs']['roomId'] # obtaining the 'roomId' parameter from the guestChatRoom routing of its websocket connection
         self.room_group_name = 'chatRoom_%s' % self.room_ID # creating the group name based on the roomID
+        
         
         # converting asynchronous channel_layer to synchronous and joining the room group...  
         async_to_sync(self.channel_layer.group_add)(
@@ -25,24 +42,46 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data): # receiving message from the websocket
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
-        
         # sending message to room
+        
+        room = GuestChatRoom.objects.get(id=self.room_ID)
+        Message.objects.create(content=message, sender=self.scope["user"], room=room)
+        
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
             }
         )
     
     # receiving message from the group
     def chat_message(self, event): # creating a custom event for each channel in the channel layer
         message = event['message']
+        user_id = self.scope["user"].id
+        sender = CustomUser.objects.get(id=user_id)
         
         #sending message to the Websocket
         self.send(text_data=json.dumps(
-            {'message': message}
+            {
+                'message': message,
+                'user': user_id,
+            }
         ))
+    
+    def store_message(self, message):
+        room = GuestChatRoom.objects.get(id=self.room_ID)
+        Message.objects.create(content=message, sender=self.scope["user"], room=room)
+    
+    def fetch_messages(self, message):
+        room = GuestChatRoom.objects.get(id=self.room_ID)
+        room_messages = Message.objects.filter(room=room)
+        
+        
+        # room = GuestChatRoom.objects.get(id=self.room_ID)
+        # message = Message.objects.create(content=message, sender=sender, room=room)
+        # message.save()
+        
     
     
     
