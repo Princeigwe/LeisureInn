@@ -375,6 +375,11 @@
 			function sendMessage(e){
 				if (e.preventDefault) e.preventDefault();
 				const message = document.getElementById('message').value;
+
+				if (message=="") {
+					return false;
+				}
+
 				chatRoomSocket.send(
 					JSON.stringify({
 						'command': 'new_message',
@@ -405,7 +410,7 @@
 			function createMessage(data){
 				var sender = data['sender'];
 				console.log('data',sender)
-				
+
 				msgListTag = document.createElement('li');
 
 				textMainTag = document.createElement('div');
