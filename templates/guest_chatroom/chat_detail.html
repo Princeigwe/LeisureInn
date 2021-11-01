@@ -347,6 +347,7 @@
 
 				console.log(e)
 				var data = JSON.parse(e.data);
+				
 				if (data['command'] === 'messages') {
 					for (let i = 0; i < data['messages'].length; i++) {
 						createMessage(data['messages'][i]);
@@ -399,10 +400,12 @@
 			// 	li.append(document.createTextNode(data.message.content));
 			// 	ul.append(li);
 			// }
-			var user_email = '{{user_email}}';
+			var user_first_name = '{{user_first_name}}';
 
 			function createMessage(data){
-				var sender = data['message'];
+				var sender = data['sender'];
+				console.log('data',sender)
+				
 				msgListTag = document.createElement('li');
 
 				textMainTag = document.createElement('div');
@@ -418,11 +421,12 @@
 				textMainTag.className = "text-main";
 				textGroupTag.className = "text-group me";
 				textTag.className = "text me";
-
-				if (sender === user_email){
+				if (sender === user_first_name){
 					msgListTag.className = "message me";
 				}else{
 					msgListTag.className = 'message';
+					textGroupTag.className = "text-group";
+					textTag.className = "text";
 				}
 
 				// msgListTag.className = "message me";
