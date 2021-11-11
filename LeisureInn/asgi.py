@@ -13,7 +13,8 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
 
-import chat.routing
+# import chat.routing
+import guest_chatRoom.routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LeisureInn.settings')
 
@@ -21,12 +22,12 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LeisureInn.settings')
 
 # routing configuration setting...
 """if the url requested contains ws:// or wss://, it will beauthenticated to
-check if it matches with those in the URLRouter"""
+check if it matches with those in the URLRoute"""
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
     "websocket": AuthMiddlewareStack(
         URLRouter(
-            chat.routing.websocket_urlpatterns ## importing all websocket urls
+            guest_chatRoom.routing.websocket_urlpatterns # importing websocket urls from guest_chatRoom
         )
-    ),
+    )
 })
