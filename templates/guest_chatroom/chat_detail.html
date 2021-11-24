@@ -58,12 +58,12 @@
 													{% if user.is_superuser %}
 														<div class="data">
 															<h5><a href="#"> {{room.guest.first_name}} {{room.guest.last_name}} </a></h5>
-															<span>Active now</span>
+															<span> {{room.guest.email}} </span>
 														</div>
 														{% else %}
 														<div class="data">
 															<h5><a href="#"> {{room.admin.first_name}} {{room.admin.last_name}} </a></h5>
-															<span>Active now</span>
+															<span> {{room.admin.email}} </span>
 														</div>
 													{% endif %}
 														
@@ -88,7 +88,7 @@
                                     <div class="content" id="content">
                                         <div class="container">
                                             <div class="col-md-12">
-                                                <div class="date">
+                                                <!-- <div class="date">
                                                     <hr>
                                                     <span>Yesterday</span>
                                                     <hr>
@@ -113,66 +113,11 @@
                                                         </div>
                                                         <span>11:32 AM</span>
                                                     </div>
-                                                </div>
+                                                </div> -->
 
                                                 
                                                 <ul id="message-list">
 
-													<li class="message me">
-														<div class="text-main">
-															<div class="text-group me">
-																<div class="text me">
-																	<p id="message_content"> kala kala </p>
-																</div>
-															</div>
-															<span>{{message.timestamp}}</span>
-														</div>
-													</>
-													
-													<!-- {% for message in roomMessages %}
-													<li>
-														<div class="message me">
-                                                            <div class="text-main">
-                                                                <div class="text-group me">
-                                                                    <div class="text me">
-                                                                        <p id="message_content"> {{message.content}} </p>
-                                                                    </div>
-                                                                </div>
-                                                                <span>{{message.timestamp}}</span>
-                                                            </div>
-                                                        </div>
-													</li>
-													{% endfor %} -->
-														
-
-													<!-- {% for message in messages %}
-                                                    <li>
-														<div class="message me">
-                                                            <div class="text-main">
-                                                                <div class="text-group me">
-                                                                    <div class="text me">
-                                                                        <p id="message_content"> {{message.content}} </p>
-                                                                    </div>
-                                                                </div>
-                                                                <span>11:32 AM</span>
-                                                            </div>
-                                                        </div>
-													</li>
-
-													<li>
-														<div class="message">
-															<img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
-															<div class="text-main">
-																<div class="text-group">
-																	<div class="text">
-																		<p>Coming along nicely, we've got a draft for the client quarries completed.</p>
-																	</div>
-																</div>
-																<span>02:56 PM</span>
-															</div>
-														</div>
-													</li>
-                                                {% endfor %} -->
 												</ul>
                                                     
                                             </div>
@@ -333,18 +278,6 @@
 
             chatRoomSocket.onmessage = function(e){
 
-				// console.log(JSON.parse(e.data))
-
-				// console.log(e)
-				// const ul = document.getElementById('message-list')
-				// var li = document.createElement('li')
-				// var data = JSON.parse(e.data);
-				// li.append(document.createTextNode(data.message.content));
-				// ul.append(li);
-				
-
-				
-
 				console.log(e)
 				var data = JSON.parse(e.data);
 				
@@ -388,6 +321,7 @@
 					})
 				); 
 				messageForm.reset();
+				gotoBottom();
 				return false;
 			}
 			
@@ -396,15 +330,7 @@
 				chatRoomSocket.send(JSON.stringify({'command': 'fetch_messages'}));
 			}
 
-			// var data = JSON.parse(e.data);
-			// function createMessage(data){
-			// 	// console.log(e)
-			// 	const ul = document.getElementById('message-list')
-			// 	var li = document.createElement('li')
-				
-			// 	li.append(document.createTextNode(data.message.content));
-			// 	ul.append(li);
-			// }
+			
 			var user_first_name = '{{user_first_name}}';
 
 			function createMessage(data){
