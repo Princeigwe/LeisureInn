@@ -8,8 +8,8 @@ from bookings.models import Booking
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    first_name = models.CharField(max_length=50, default='first name')
-    last_name = models.CharField(max_length=50, default='last name')
+    first_name = models.CharField(max_length=50, blank=True)
+    last_name = models.CharField(max_length=50, blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     
@@ -17,4 +17,5 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return self.email
+
 

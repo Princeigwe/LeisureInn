@@ -28,7 +28,13 @@ http://www.templatemo.com/tm-475-holiday
     <![endif]-->
 
     </head>
+    <!-- adding the web push header -->
+    
+
     <body class="tm-gray-bg">
+        <!-- web push button -->
+        
+
         <!-- Header -->
         <div class="tm-header">
             <div class="container">
@@ -43,9 +49,26 @@ http://www.templatemo.com/tm-475-holiday
                         <nav class="tm-nav">
                         <ul>
                             <!-- <li><a href=" {% url 'rooms:home' %} " class="active">Home</a></li> -->
-                            <li><a href=" {% url 'rooms:home' %} ">Home</a></li>
-                            <li class="dropdown"><a href="#">Account</a></li>
-                            <li><a href=" {% url 'guest_reservations:all_reservations' %} ">Reservations</a></li>
+                            <li><a href=" {% url 'rooms:home' %} ">Home</a>
+                            </li>
+                            <li class="dropdown-button">
+                                <a href="#">Account</a>
+                                <div class="dropdown-menu-item">
+                                    <ul>
+                                        <li>
+                                            <a> Change Password </a>
+                                        </li>
+                                        <li>
+                                            <a> Reset Password </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href=" {% url 'guest_reservations:all_reservations' %} ">Reservations</a>
+                            
+                            </li>
                             <li>
                                 
                                 {% if user.is_authenticated %}

@@ -34,6 +34,8 @@ ALLOWED_HOSTS = ['0.0.0.0',]
 # Application definition
 
 INSTALLED_APPS = [
+    
+    # system apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites', # for 3rd party account site
     
+    # local apps with Django Channels
+    
+    'channels',
+    # 'chat.apps.ChatConfig',
+    
     # local apps
     'pages.apps.PagesConfig',
     'rooms.apps.RoomsConfig',
@@ -49,6 +56,7 @@ INSTALLED_APPS = [
     'payments.apps.PaymentsConfig',
     'users.apps.UsersConfig',
     'guest_reservations.apps.GuestReservationsConfig',
+    'guest_chatRoom.apps.GuestChatroomConfig',
     
     # 3rd party apps
     'crispy_forms',
@@ -57,6 +65,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account', # a 3rd party account site
     "pinax.messages",
+    # 'webpush', # for web push notifications 
+    
 ]
 
 SITE_ID = 1 # number of 3rd party account site
@@ -82,7 +92,7 @@ ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
 
 ACCOUNT_SESSION_REMEMBER = True # to remember user login session
 
-ACCOUNT_SIGNUP_FORM_CLASS = 'users.forms.AdditionalSignUpInfoForm' # adding the additional signUp form to django-allauth
+# ACCOUNT_SIGNUP_FORM_CLASS = 'users.forms.AdditionalSignUpInfoForm' # adding the additional signUp form to django-allauth
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'rooms:home' # redirect url after email confirmation
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
@@ -118,6 +128,19 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'LeisureInn.wsgi.application'
+
+#Configuration for Channels
+ASGI_APPLICATION = "LeisureInn.asgi.application"
+# CHANNELS LAYER CONFIGURATION
+## connecting Channels to the redis server
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('redis', 6379)],
+        },
+    },
+}
 
 
 # Database
@@ -206,3 +229,10 @@ DEFAULT_FROM_EMAIL = 'leisureinnco@gmail.com' # the email sender email address
 # FLUTTERWAVE KEYS
 FLUTTERWAVE_TEST_SECRET_KEY = os.environ.get('FLUTTERWAVE_TEST_SECRET_KEY')
 FLUTTERWAVE_TEST_PUBLIC_KEY = os.environ.get('FLUTTERWAVE_TEST_PUBLIC_KEY')
+
+# Web Push notification settings
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": os.environ.get('VAPID_PUBLIC_KEY'),
+    "VAPID_PRIVATE_KEY": os.environ.get('VAPID_PRIVATE_KEY'),
+    "VAPID_ADMIN_EMAIL": os.environ.get('VAPID_ADMIN_EMAIL')
+}

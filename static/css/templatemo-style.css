@@ -17,6 +17,7 @@ h1,h2,h3 {
 	padding: 0;
 }
 h1,h2,h3,a,p { font-family: 'Open Sans', sans-serif; }
+
 a:hover,
 a:focus {
 	text-decoration: none;
@@ -900,4 +901,14 @@ hr { border-top: 1px solid #111010; }
 
 @media screen and (max-width: 400px) {
 	.tm-section-title {	font-size: 28px; }
+}
+.dropdown-menu-item ul{    
+	position: absolute;
+    display: none;
+    flex-direction: column;
+    color: black;
+    background: white;
+}
+.tm-nav ul .dropdown-button:hover .dropdown-menu-item ul{
+	display:flex;
 }

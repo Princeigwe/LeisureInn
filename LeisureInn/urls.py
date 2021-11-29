@@ -19,18 +19,21 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    
     path('admin/', admin.site.urls),
     
     # 3rd party urls
     path('accounts/', include('allauth.urls')), ## django-allauth url for user management
-    path('messages/', include("pinax.messages.urls", namespace="pinax_messages")), # pinax url
+    # path('webpush/', include('webpush.urls')),
     
-    
+    # local apps urls
     path('pages/', include('pages.urls', namespace='pages')),
     path('', include('rooms.urls', namespace='rooms')),
     path('book/', include('bookings.urls', namespace='bookings')),
     path('payment/', include('payments.urls', namespace='payments')), 
     path('guest_reservations/', include('guest_reservations.urls', namespace='guest_reservations')),
+    path('guest_chatRoom/', include('guest_chatRoom.urls', namespace='guest_chatRoom')),
+    path('users/', include('users.urls', namespace='users')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
