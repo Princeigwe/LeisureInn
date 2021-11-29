@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'allauth',
     'allauth.account', # a 3rd party account site
-    "pinax.messages",
+    # "pinax.messages",
     # 'webpush', # for web push notifications 
     
 ]
@@ -121,7 +121,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 
                 #3rd party context processor
-                "pinax.messages.context_processors.user_messages"
+                # "pinax.messages.context_processors.user_messages"
             ],
         },
     },
