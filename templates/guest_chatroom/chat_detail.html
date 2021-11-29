@@ -18,6 +18,7 @@
 		<link href="{% static 'chat/dist/img/favicon.png' %}" type="image/png" rel="icon">
 	</head>
 	<body>
+		
 
 		
 
@@ -87,7 +88,7 @@
                                     </div>
                                     <div class="content" id="content">
                                         <div class="container">
-                                            <div class="col-md-12">
+                                            <div class="col-md-12" id="message_list">
                                                 <!-- <div class="date">
                                                     <hr>
                                                     <span>Yesterday</span>
@@ -116,9 +117,9 @@
                                                 </div> -->
 
                                                 
-                                                <ul id="message-list">
+                                                <!-- <ul id="message-list">
 
-												</ul>
+												</ul> -->
                                                     
                                             </div>
                                         </div>
@@ -274,6 +275,7 @@
             chatRoomSocket.onopen = function(e){
                 console.log("Websocket Connected");
 				fetchMessages();
+				scrollToBottom(document.getElementById('content'));
             }
 
             chatRoomSocket.onmessage = function(e){
@@ -321,13 +323,14 @@
 					})
 				); 
 				messageForm.reset();
-				gotoBottom();
 				return false;
 			}
 			
 			// fetching messages with the consumers fetch_messages function
 			function fetchMessages(){
 				chatRoomSocket.send(JSON.stringify({'command': 'fetch_messages'}));
+
+				gotoBottom(message_list);
 			}
 
 			
@@ -337,7 +340,8 @@
 				var sender = data['sender'];
 				console.log('data',sender)
 
-				msgListTag = document.createElement('li');
+				// msgListTag = document.createElement('li');
+				msgItemDivTag = document.createElement('div');
 
 				textMainTag = document.createElement('div');
 				textGroupTag = document.createElement('div');
@@ -347,15 +351,15 @@
 				spanTag = document.createElement('span');
 				pTag.textContent = data.content;
 				spanTag.textContent = data.timestamp;
-				const chat_log = document.getElementById('message-list');
+				const chat_log = document.getElementById('message_list');
 
 				textMainTag.className = "text-main";
 				textGroupTag.className = "text-group me";
 				textTag.className = "text me";
 				if (sender === user_first_name){
-					msgListTag.className = "message me";
+					msgItemDivTag.className = "message me";
 				}else{
-					msgListTag.className = 'message';
+					msgItemDivTag.className = 'message';
 					textGroupTag.className = "text-group";
 					textTag.className = "text";
 				}
@@ -365,9 +369,19 @@
 				textGroupTag.appendChild(textTag);
 				textMainTag.appendChild(textGroupTag);
 				// textMainTag.appendChild(spanTag);
-				msgListTag.appendChild(textMainTag);
-				chat_log.appendChild(msgListTag);
+				msgItemDivTag.appendChild(textMainTag);
+				chat_log.appendChild(msgItemDivTag);
 			}
+
+			function gotoBottom(id) {
+                    var element = document.getElementById(id);
+                    element.scrollTop = element.scrollHeight - element.clientHeight;
+            }
+            window.onload = function() {
+                setTimeout(function() {
+                    gotoBottom('main');
+                }, 2000);
+            }
 
         </script>
 	</body>

@@ -58,6 +58,9 @@ services:
         environment: 
             - FLUTTERWAVE_TEST_SECRET_KEY=${FLUTTERWAVE_TEST_SECRET_KEY}
             - FLUTTERWAVE_TEST_PUBLIC_KEY=${FLUTTERWAVE_TEST_PUBLIC_KEY}
+            - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
+            - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
+            - VAPID_ADMIN_EMAIL=${VAPID_ADMIN_EMAIL}
         volumes: 
             - .:/code
         ports: 
