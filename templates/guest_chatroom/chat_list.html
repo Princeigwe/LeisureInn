@@ -33,7 +33,7 @@
 							<h4> {{room.admin.first_name}} {{room.admin.last_name}} </h4>
 							{% endif %}
 								
-							<p>www.example.com</p>
+							<!-- <p>www.example.com</p> -->
 							<div class="button-list mt-4 mb-3">
 								<a href="{% url 'guest_chatRoom:room_messages' room.id %}"><button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i> Message </button></a>
 								<button type="button" class="btn btn-success-rgba"><i class="feather icon-phone mr-2"></i>View Profile</button>
@@ -41,27 +41,59 @@
 							<div class="table-responsive">
 								<table class="table table-borderless mb-0">
 									<tbody>
+
+										
+										{% if user.is_superuser %}
+										<tr>
+											<th scope="row" class="p-1">Nationality :</th>
+											<td class="p-1"> {{room.guest.country}} </td>
+										</tr>
+										<tr>
+											<th scope="row" class="p-1">Occupation :</th>
+											<td class="p-1"> {{room.guest.occupation}} </td>
+										</tr>
+										<tr>
+											<th scope="row" class="p-1">Birthday :</th>
+											<td class="p-1"> {{room.guest.birthday}} </td>
+										</tr>
 										<tr>
 											<th scope="row" class="p-1">Age :</th>
-											<td class="p-1">52</td>
+											<td class="p-1"> {{room.guest.age}} </td>
 										</tr>
 										<tr>
-											<th scope="row" class="p-1">Work Hrs :</th>
-											<td class="p-1">110</td>
+											<th scope="row" class="p-1">Occupation :</th>
+											<td class="p-1"> {{room.guest.occupation}} </td>
 										</tr>
 										<tr>
-											<th scope="row" class="p-1">Country :</th>
-											<td class="p-1">Australia</td>
+											<th scope="row" class="p-1">Email :</th>
+											<td class="p-1"> {{room.guest.email}} </td>
+										</tr>
+										{%else%}
+										<tr>
+											<th scope="row" class="p-1">Nationality :</th>
+											<td class="p-1"> {{room.admin.country}} </td>
 										</tr>
 										<tr>
-											<th scope="row" class="p-1">Email ID :</th>
-											
-											{% if user.is_superuser %}
-												<td class="p-1"> {{room.guest.email}} </td>
-												{% else %}
-												<td class="p-1"> {{room.admin.email}} </td>
-											{% endif %}
+											<th scope="row" class="p-1">Occupation :</th>
+											<td class="p-1"> {{room.admin.occupation}} </td>
 										</tr>
+										<tr>
+											<th scope="row" class="p-1">Birthday :</th>
+											<td class="p-1"> {{room.admin.birthday}} </td>
+										</tr>
+										<tr>
+											<th scope="row" class="p-1">Age :</th>
+											<td class="p-1"> {{room.admin.age}} </td>
+										</tr>
+										<tr>
+											<th scope="row" class="p-1">Occupation :</th>
+											<td class="p-1"> {{room.admin.occupation}} </td>
+										</tr>
+										<tr>
+											<th scope="row" class="p-1">Email :</th>
+											<td class="p-1"> {{room.admin.email}} </td>
+										</tr>
+										{% endif %}
 									</tbody>
 								</table>
 							</div>
