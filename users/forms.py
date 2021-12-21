@@ -15,6 +15,4 @@ from django import forms
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ('first_name', 'last_name')
-
-
+        fields = ('image', 'first_name', 'last_name', 'country', 'age', 'occupation', 'birthday', 'mobile')

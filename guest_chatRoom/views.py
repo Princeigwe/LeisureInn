@@ -46,4 +46,7 @@ def room_messages(request, room_id ):
     roomMessages = Message.objects.filter(id=room.id)
     return render(request, 'guest_chatroom/chat_detail.html', {'room_id': room.id, 'room':room, 'roomMessages': roomMessages, 'user_first_name':user_first_name})
 
-
+@login_required
+def guest_chatRoom_user_bio_and_trans_data(request, room_id): # getting user bio data for now
+    room = get_object_or_404(GuestChatRoom, id=room_id)
+    return render(request, 'users/user_bio_trans_data.html', {'room':room})

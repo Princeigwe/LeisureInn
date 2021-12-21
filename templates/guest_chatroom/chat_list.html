@@ -22,9 +22,25 @@
 			<div class="card m-b-30">
 				<div class="card-body py-5">
 					<div class="row">
-						<div class="col-lg-3 text-center">
-							<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="img-fluid mb-3" alt="user" />
-						</div>
+						
+						{% if user.is_superuser %}
+							<div class="col-lg-3 text-center">
+								<img src= " 
+								{% if room.guest.image %}
+								{{room.guest.image.url}}
+								{% endif %}
+								" class="img-fluid mb-3" alt="user" />
+							</div>
+						{% else %}
+							<div class="col-lg-3 text-center">
+								<img src= " 
+								{% if room.admin.image %}
+								{{room.admin.image.url}}
+								{% endif %}
+								" class="img-fluid mb-3" alt="user" />
+							</div>
+						{% endif %}
+							
 						<div class="col-lg-9">
 							
 							{% if user.is_superuser %}
@@ -36,7 +52,7 @@
 							<!-- <p>www.example.com</p> -->
 							<div class="button-list mt-4 mb-3">
 								<a href="{% url 'guest_chatRoom:room_messages' room.id %}"><button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i> Message </button></a>
-								<button type="button" class="btn btn-success-rgba"><i class="feather icon-phone mr-2"></i>View Profile</button>
+								<a href=" {% url 'guest_chatRoom:user_bio_trans_data' room.id %} "><button type="button" class="btn btn-success-rgba"><i class="feather icon-phone mr-2"></i>View Profile</button></a>
 							</div>
 							<div class="table-responsive">
 								<table class="table table-borderless mb-0">
