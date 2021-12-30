@@ -88,7 +88,7 @@
                                     </div>
                                     <div class="content" id="content">
                                         <div class="container">
-                                            <div class="col-md-12" id="message_list">
+                                            <div class="col-md-12" id="message_list" style="max-height: calc(100vh - 200px);overflow-y: auto;">
                                                 <!-- <div class="date">
                                                     <hr>
                                                     <span>Yesterday</span>
@@ -257,8 +257,12 @@
 		<script src="{% static 'chat/dist/js/swipe.min.js' %}"></script>
 		<script src="{% static 'chat/dist/js/bootstrap.min.js' %}"></script>
 		<script>
-			function scrollToBottom(el) { el.scrollTop = el.scrollHeight; }
-			scrollToBottom(document.getElementById('content'));
+			function scrollToBottom(id) { 
+				let el = document.getElementById(id)
+				el.scrollTop = el.scrollHeight - el.clientHeight; 
+				console.log('scrollToBottom',el) 
+			}
+			// scrollToBottom('message_list');
 		</script>
 
         {{room_id|json_script:"room-id"}}
@@ -275,7 +279,7 @@
             chatRoomSocket.onopen = function(e){
                 console.log("Websocket Connected");
 				fetchMessages();
-				scrollToBottom(document.getElementById('content'));
+				// scrollToBottom(document.getElementById('message_list'));
             }
 
             chatRoomSocket.onmessage = function(e){
@@ -287,6 +291,7 @@
 					for (let i = 0; i < data['messages'].length; i++) {
 						createMessage(data['messages'][i]);
 					}
+					scrollToBottom('message_list')
 				}else if (data['command'] === 'new_message'){
 					createMessage(data['message']);
 				}
@@ -329,8 +334,8 @@
 			// fetching messages with the consumers fetch_messages function
 			function fetchMessages(){
 				chatRoomSocket.send(JSON.stringify({'command': 'fetch_messages'}));
-
-				gotoBottom(message_list);
+				scrollToBottom('message_list');
+				// gotoBottom(message_list);
 			}
 
 			
@@ -338,7 +343,7 @@
 
 			function createMessage(data){
 				var sender = data['sender'];
-				console.log('data',sender)
+				// console.log('data',sender)
 
 				// msgListTag = document.createElement('li');
 				msgItemDivTag = document.createElement('div');
@@ -371,6 +376,8 @@
 				// textMainTag.appendChild(spanTag);
 				msgItemDivTag.appendChild(textMainTag);
 				chat_log.appendChild(msgItemDivTag);
+
+				scrollToBottom('message_list');
 			}
 
 			function gotoBottom(id) {
@@ -379,7 +386,8 @@
             }
             window.onload = function() {
                 setTimeout(function() {
-                    gotoBottom('main');
+                    // gotoBottom('main');
+					// scrollToBottom('message_list')
                 }, 2000);
             }
 

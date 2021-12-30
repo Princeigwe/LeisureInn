@@ -34,12 +34,12 @@ services:
 
     # database(db) service container
     db:
-        image: postgres
+        image: postgres:13.4-alpine
         container_name: "LeisureInn_db"
         volumes:
             - ./data/db:/var/lib/postgresql/data
         environment:
-            POSTGRES_HOST_AUTH_METHOD: "trust"
+            - "POSTGRES_HOST_AUTH_METHOD=trust"
 
     # redis service container
     redis:
