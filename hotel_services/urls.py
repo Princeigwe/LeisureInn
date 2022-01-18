@@ -5,5 +5,5 @@ app_name = "hotel_services"
 
 urlpatterns = [
     path('', all_services_page, name='all_services'),
-    path('subscriptions/<int:service_id>/', service_subscriptions, name="service_subscriptions")
+    path('<str:service_name>/subscriptions/<int:service_id>/', service_subscriptions, name="service_subscriptions")
 ]

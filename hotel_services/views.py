@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.shortcuts import render, get_object_or_404
 from .models import Service, Subscription
 from django.contrib.auth.decorators import login_required
@@ -15,9 +16,9 @@ def all_services_page(request):
 
 
 #  get another template for service detail
-def service_subscriptions(request, service_id):
+def service_subscriptions(request, service_id, service_name):
     """getting subscription plans for service"""
-    service = get_object_or_404(Service, id=service_id)
+    service = get_object_or_404(Service, name=service_name, id=service_id)
     subscriptions = Subscription.objects.filter(service=service)
     return render(request, 'hotel_services/hotel_services_detail.html', {'subscriptions': subscriptions})
 
