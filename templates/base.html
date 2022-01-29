@@ -50,16 +50,28 @@ http://www.templatemo.com/tm-475-holiday
                         <ul>
                             <!-- <li><a href=" {% url 'rooms:home' %} " class="active">Home</a></li> -->
                             <li><a href=" {% url 'rooms:home' %} ">Rooms</a></li>
-                            <li><a href=" # ">Service</a></li>
+                            <li class="dropdown-button">
+                                <a href=" # ">Service</a>
+                                <div class="dropdown-menu-item">
+                                    <ul>
+                                        <li>
+                                            <a href=" {% url 'hotel_services:all_services' %} "> Subscription </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> One time </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                             <li class="dropdown-button">
                                 <a href="#">Account</a>
                                 <div class="dropdown-menu-item">
                                     <ul>
                                         <li>
-                                            <a> Change Password </a>
+                                            <a href="#"> Change Password </a>
                                         </li>
                                         <li>
-                                            <a> Reset Password </a>
+                                            <a href="#"> Reset Password </a>
                                         </li>
                                         <li>
                                 

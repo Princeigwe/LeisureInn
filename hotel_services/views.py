@@ -1,11 +1,20 @@
-from unicodedata import name
-from django.shortcuts import render, get_object_or_404
-from .models import Service, Subscription
+from django.shortcuts import render, get_object_or_404, redirect
+
+from LeisureInn.settings import SECRET_KEY
+from .models import Service, Subscription, GuestPaidSubscription
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.conf import settings
 
-from datetime import date, datetime
+from datetime import datetime
+import requests
+from requests.adapters import HTTPAdapter
+from requests.exceptions import ConnectionError
+
+flutterwave_adapter = HTTPAdapter(max_retries=5)
+session = requests.Session()
+
+session.mount("https://api.ravepay.co/v2/gpx/paymentplans/create", flutterwave_adapter)
 
 # Create your views here.
 
@@ -23,39 +32,50 @@ def service_subscriptions(request, service_id, service_name):
     return render(request, 'hotel_services/hotel_services_detail.html', {'subscriptions': subscriptions})
 
 
-@login_required
-def subscription_service_payment_process(request, subscription_id):
-    """booking a service based on subscription plan"""
-    # getting guests number of days of stay
-    guest_checkIn_date = date(request.session["check_in_data"])
-    guest_checkOut_date = date(request.session["check_out_data"])
-    guestDaysOfStay = (guest_checkOut_date - guest_checkIn_date).days
-    
-    # getting the subscription the guest wants to pay for
+def subscription_payment_process(request, subscription_id):
     subscription = get_object_or_404(Subscription, id=subscription_id)
-    subscription_days = subscription.days
-    subscription_price = subscription.price
+    amount = int(subscription.price)
+    name = str(subscription.service)
+    interval = "every {subscription_days} days".format(subscription_days=subscription.days)
+    seckey =  settings.FLUTTERWAVE_TEST_SECRET_KEY
     
-    # getting service name
-    service = subscription.service
+    url = "https://api.ravepay.co/v2/gpx/paymentplans/create" ## payment plan endpoint
+    payload = dict(amount=amount, name=name, interval=interval, seckey=seckey)
+    try:
+        subscription_post_request= session.post(url=url, json=payload)
+        print(subscription_post_request.text)
+    except ConnectionError as ce:
+        print(ce)
     
+    user = request.user
     
-    # getting details for flutterwave payment parameters
-    now = datetime.now()
-    publicKey = settings.FLUTTERWAVE_TEST_PUBLIC_KEY
-    customer_email = request.user.email
-    customer_phone = request.user.phone
-    amount = subscription_price
-    tx_ref = "lSriN9302" + str(service.name+subscription.id+now)
+    # getting the current time
+    now = datetime.now() # will be used for transaction reference
     
-    # posting message warning
-    if subscription_days < guestDaysOfStay:
-        messages.warning(request, "Your number of stay is less than days of subscription plan. No refunds once booked")
+    publicAPIKey = settings.FLUTTERWAVE_TEST_PUBLIC_KEY # flutterwave public API key
+    customer_email = user.email
+    amount = amount
+    customer_phone = user.mobile
+    tx_ref = "lSriN9302-{subscription_id}-{now}".format(subscription_id=subscription.id, now=now)
+    metaname = "{service} subscription".format(service=subscription.service)
+    metavalue = "subscription ID{id}".format(id=subscription.id)
+    payment_plan_id = subscription.id # for payment plan parameter
     
     return render(request, 'hotel_services/service_payment_process.html', {
-        'publicKey': publicKey,
+        'publicAPIKey': publicAPIKey,
         'customer_email': customer_email,
-        'customer_phone': customer_phone,
         'amount': amount,
-        'tx_ref': tx_ref
+        'customer_phone': customer_phone,
+        'tx_ref': tx_ref,
+        'metaname': metaname,
+        'metavalue': metavalue,
+        'payment_plan_id': payment_plan_id,
+        'id': subscription.id
     })
+
+def subscription_payment_successful(request, id):
+    subscription = get_object_or_404(Subscription, id=id)
+    guest = request.user
+    guestPaidSubscription = GuestPaidSubscription.objects.create(subscription=subscription, guest=guest, paid=True, date_created=datetime.now)
+    guestPaidSubscription.save()
+    return render(request, 'hotel_services/service_payment_successful.html', {'id':id})

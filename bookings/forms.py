@@ -1,6 +1,6 @@
 from django import forms
 from django.db.models.base import Model
-from bootstrap_datepicker_plus import DatePickerInput
+from bootstrap_datepicker_plus.widgets import DatePickerInput
 from .models import Booking
 
 ROOM_OPTIONS = (
