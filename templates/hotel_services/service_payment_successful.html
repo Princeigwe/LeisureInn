@@ -1,1 +1,13 @@
-<p>Successful</p>
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block title %}
+    Subscription Created |  Leisure Inn
+{% endblock title %}
+
+
+{% block content %}
+    <h3 class="container">Subscription for {{subscription.service}} {{subscription.plan}} plan was created successfully. </h3>
+{% endblock content %}

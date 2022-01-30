@@ -5,23 +5,6 @@
     
 
 {% block content %}
-    <!-- <form>
-        <a class="flwpug_getpaid" 
-        data-PBFPubKey="{{publicAPIKey}}" 
-        data-txref="{{tx_ref}}" 
-        data-amount="{{amount}}" 
-        data-customer_email="{{customer_email}}" 
-        data-currency="NGN" 
-        data-pay_button_text="Pay Now" 
-        data-country="NG" 
-        data-redirect_url="http://0.0.0.0:8000/services/" 
-        data-payment_plan="{{payment_plan_id}}"></a>
-    
-        <script type="text/javascript" src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
-    </form>
- -->
-
-
     <form>
         <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
         <button type="button" onClick="payWithRave()">Pay Now</button>
@@ -58,7 +41,7 @@
                         response.tx.chargeResponseCode == "0"
                     ) {
                         // redirect to a success page
-                        window.location.href= " {% url 'hotel_services:subscription_payment_successful' %} " ;
+                        window.location.href= " {% url 'hotel_services:subscription_payment_successful' id %} " ;
                     } else {
                         // redirect to a failure page.
                     }

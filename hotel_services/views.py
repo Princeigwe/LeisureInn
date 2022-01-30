@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
 from LeisureInn.settings import SECRET_KEY
-from .models import Service, Subscription, GuestPaidSubscription
+from .models import Service, Subscription, GuestCreatedSubscription
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.conf import settings
@@ -33,6 +33,11 @@ def service_subscriptions(request, service_id, service_name):
 
 
 def subscription_payment_process(request, subscription_id):
+    """this is the subscription creation process.
+        This view makes a POST request to flutterwave recurring payment endpoint 
+        with the necessary data with Python's requests library, and the guest completes
+        the payment with javascript payment modal
+    """
     subscription = get_object_or_404(Subscription, id=subscription_id)
     amount = int(subscription.price)
     name = str(subscription.service)
@@ -73,9 +78,12 @@ def subscription_payment_process(request, subscription_id):
         'id': subscription.id
     })
 
-def subscription_payment_successful(request):
-    # subscription = get_object_or_404(Subscription, id=id)
-    # guest = request.user
-    # guestPaidSubscription = GuestPaidSubscription.objects.create(subscription=subscription, guest=guest, paid=True, date_created=datetime.now)
-    # guestPaidSubscription.save()
-    return render(request, 'hotel_services/service_payment_successful.html')
+
+def subscription_payment_successful(request, id):
+    subscription = get_object_or_404(Subscription, id=id)
+    guest = request.user
+    guestCreatedSubscription = GuestCreatedSubscription.objects.create(subscription=subscription, guest=guest)
+    guestCreatedSubscription.save()
+    return render(request, 'hotel_services/service_payment_successful.html', {
+        'subscription': subscription,
+    })

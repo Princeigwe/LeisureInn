@@ -30,10 +30,15 @@ class Subscription(models.Model):
     days = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.CharField(max_length=50, default='')
+    
+    def __str__(self):
+        return str(self.service.name)
 
 
-class GuestPaidSubscription(models.Model):
+class GuestCreatedSubscription(models.Model):
     subscription = models.ForeignKey(Subscription, on_delete=models.SET_NULL, null=True)
     guest = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    paid = models.BooleanField(default=False)
     date_created = models.DateTimeField(default=now)
+    
+    def __str__(self):
+        return str(self.subscription.service.name)

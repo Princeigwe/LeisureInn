@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Service, Subscription, GuestPaidSubscription
+from .models import Service, Subscription, GuestCreatedSubscription
 
 # Register your models here.
 
@@ -12,8 +12,8 @@ class ServiceAdmin(admin.ModelAdmin):
     model = Service
     inlines = [SubscriptionInline]
 
-class GuestPaidSubscriptionAdmin(admin.ModelAdmin):
-    model = GuestPaidSubscription
+class GuestCreatedSubscriptionAdmin(admin.ModelAdmin):
+    model = GuestCreatedSubscription
     list_display = ['id', 'subscription']
     
     def subscription(self, obj):
@@ -22,4 +22,4 @@ class GuestPaidSubscriptionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Service, ServiceAdmin)
-admin.site.register(GuestPaidSubscription, GuestPaidSubscriptionAdmin)
+admin.site.register(GuestCreatedSubscription, GuestCreatedSubscriptionAdmin)
