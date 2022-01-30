@@ -73,9 +73,9 @@ def subscription_payment_process(request, subscription_id):
         'id': subscription.id
     })
 
-def subscription_payment_successful(request, id):
-    subscription = get_object_or_404(Subscription, id=id)
-    guest = request.user
-    guestPaidSubscription = GuestPaidSubscription.objects.create(subscription=subscription, guest=guest, paid=True, date_created=datetime.now)
-    guestPaidSubscription.save()
-    return render(request, 'hotel_services/service_payment_successful.html', {'id':id})
+def subscription_payment_successful(request):
+    # subscription = get_object_or_404(Subscription, id=id)
+    # guest = request.user
+    # guestPaidSubscription = GuestPaidSubscription.objects.create(subscription=subscription, guest=guest, paid=True, date_created=datetime.now)
+    # guestPaidSubscription.save()
+    return render(request, 'hotel_services/service_payment_successful.html')

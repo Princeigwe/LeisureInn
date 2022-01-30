@@ -5,14 +5,29 @@
     
 
 {% block content %}
+    <!-- <form>
+        <a class="flwpug_getpaid" 
+        data-PBFPubKey="{{publicAPIKey}}" 
+        data-txref="{{tx_ref}}" 
+        data-amount="{{amount}}" 
+        data-customer_email="{{customer_email}}" 
+        data-currency="NGN" 
+        data-pay_button_text="Pay Now" 
+        data-country="NG" 
+        data-redirect_url="http://0.0.0.0:8000/services/" 
+        data-payment_plan="{{payment_plan_id}}"></a>
+    
+        <script type="text/javascript" src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
+    </form>
+ -->
+
+
     <form>
         <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
         <button type="button" onClick="payWithRave()">Pay Now</button>
     </form>
 
     <script>
-        // const API_publicKey = "FLWPUBK-24b72aebb821aea177483039677df9d3-X";
-
         const PBFPubKey = "{{publicAPIKey}}";
         const customer_email = "{{customer_email}}";
         const amount = "{{amount}}";
@@ -30,23 +45,20 @@
                 amount: amount,
                 customer_phone: customer_phone,
                 currency: "NGN",
-                payment_method: "both",
+                // payment_method: "both",
                 txref: txref,
                 payment_plan: payment_plan,
-                meta: [{
-                    metaname: metaname,
-                    metavalue: metavalue
-                }],
+                meta: [{metaname: metaname, metavalue: metavalue}],
                 onclose: function() {},
                 callback: function(response) {
-                    var txref = response.data.txRef; // collect flwRef returned and pass to a                   server page to complete status check.
+                    var flw_ref = response.tx.flwRef; // collect flwRef returned and pass to a                   server page to complete status check.
                     console.log("This is the response returned after a charge", response);
                     if (
-                        response.data.chargeResponseCode == "00" ||
-                        response.data.chargeResponseCode == "0"
+                        response.tx.chargeResponseCode == "00" ||
+                        response.tx.chargeResponseCode == "0"
                     ) {
                         // redirect to a success page
-                        window.location.href = " {% url 'hotel_services:subscription_payment_successful' id %} ";
+                        window.location.href= " {% url 'hotel_services:subscription_payment_successful' %} " ;
                     } else {
                         // redirect to a failure page.
                     }
@@ -56,5 +68,7 @@
             });
         }
     </script>
+
+
 {% endblock content %}
     
