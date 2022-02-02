@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!------ Include the above in your HEAD tag ---------->
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+	<div class="container">
+	<!-- <br>  <p class="text-center">More bootstrap 4 components on <a href="http://bootstrap-ecommerce.com/"> Bootstrap-ecommerce.com</a></p> -->
+	<hr>
+
+	<div class="row">
+		<aside class="col-sm-6">
+	<!-- <p>Payment form1</p> -->
+
+	<article class="card">
+	<div class="card-body p-5">
+	
+		<!-- <script>
+			var card_number = document.getElementsByName("card_name").value;
+			var card_expiry_month = document.getElementsByName("card_expiry_month").value;
+			var card_expiry_year = document.getElementsByName("card_expiry_year").value;
+			var card_cvv = document.getElementsByName("card_cvv").value;
+	
+			$("#card_form").submit(function(e){
+				$.ajax({
+					type : 'POST',
+					url: "https://api.flutterwave.com/v3/charges?type=card",
+					headers: {
+						"Accept": "application/json",
+						"Authorization": "{{authorization}}",
+						"Content-Type": "application/json"
+					},
+					data: {
+						"amount": "{{subscription_price}}",
+						"currency": "NGN",
+						"cvv": card_cvv,
+						"card_number": card_number,
+						"expiry_month": card_expiry_month,
+						"expiry_year": card_expiry_year,
+						"email": "{{email}}",
+						"tx_ref": "{{tx_ref}}",
+						"phone_number": "{{phone_number}}",
+						"fullname": "{{fullname}}",
+						"preauthorize": "false",
+						"redirect_url": "https://webhook.site/3ed41e38-2c79-4c79-b455-97398730866c",
+						"client_ip": "{{addr}}",
+						"meta": {
+							"Service": "{{service}}",
+							"subscriptionPlan": "{{subscription.plan}}"
+						}
+					},
+					async: false
+				})
+			})
+		</script> -->
+		<form id="card_form" method="post">
+			{% csrf_token %}
+			<div class="form-group">
+			<label for="username">Full name (on the card)</label>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text"><i class="fa fa-user"></i></span>
+				</div>
+				<input type="text" class="form-control" name="card_fullName" placeholder="" required="">
+			</div> <!-- input-group.// -->
+			</div> <!-- form-group.// -->
+
+			<div class="form-group">
+			<label for="cardNumber">Card number</label>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text"><i class="fa fa-credit-card"></i></span>
+				</div>
+				<input type="text" class="form-control" name="card_number" placeholder="">
+			</div> <!-- input-group.// -->
+			</div> <!-- form-group.// -->
+
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="form-group">
+						<label><span class="hidden-xs">Expiration</span> </label>
+						<div class="form-inline">
+							<select class="form-control" style="width:45%" name="card_expiry_month">
+							<option>MM</option>
+							<option>01</option>
+							<option>02</option>
+							<option>03</option>
+							</select>
+							<span style="width:10%; text-align: center"> / </span>
+							<select class="form-control" style="width:45%" name="card_expiry_year">
+							<option>YY</option>
+							<option>32</option>
+							<option>34</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card" >CVV <i class="fa fa-question-circle"></i></label>
+						<input class="form-control" required="" type="text" name="card_cvv">
+					</div> <!-- form-group.// -->
+				</div>
+			</div> <!-- row.// -->
+			<button class="subscribe btn btn-primary btn-block"  id="input-button" type="submit"> Confirm  </button>
+		</form>
+		
+	</div> <!-- card-body.// -->
+	</article> <!-- card.// -->
+
+
+		</aside> <!-- col.// -->
+		
+	</div> <!-- row.// -->
+
+	</div> 
+	<!--container end.//-->
+
+	<br><br>
+	<article class="bg-secondary mb-3">  
+
+	<br><br>
+	</article>
+	
+</body>
+
+</html>
+
+
+
+<script>
+	// Flutterwave subscription data and authorization function
+	
+</script>

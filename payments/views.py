@@ -7,6 +7,7 @@ from guest_reservations.models import GuestReservationList, ReservationItem
 
 # Create your views here.
 
+#  payment process with flutterwave payment parameters
 def payment_process(request, booking_id):
     publicKey = settings.FLUTTERWAVE_TEST_PUBLIC_KEY
     booking = get_object_or_404(Booking, id=booking_id)
@@ -45,11 +46,11 @@ def payment_successful(request, id):
     room.save() # saving new status of the room
     
     # deleting session data
-    del request.session["check_in_data"]
-    del request.session["check_out_data"]
+    # del request.session["check_in_data"] .................to be used in hotel services app
+    # del request.session["check_out_data"] ................ to be used in hotel services app
     del request.session["room_type_data"]
     del request.session['room_id_data']
-    del request.session['booking_id_data']
+    # del request.session['booking_id_data']
     
     return render(request, 'payment/payment_successful.html', {'id':id})
 

@@ -34,6 +34,7 @@ urlpatterns = [
     path('guest_reservations/', include('guest_reservations.urls', namespace='guest_reservations')),
     path('guest_chatRoom/', include('guest_chatRoom.urls', namespace='guest_chatRoom')),
     path('users/', include('users.urls', namespace='users')),
+    path('services/', include('hotel_services.urls', namespace='hotel_services')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

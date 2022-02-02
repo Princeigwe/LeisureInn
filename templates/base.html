@@ -49,34 +49,51 @@ http://www.templatemo.com/tm-475-holiday
                         <nav class="tm-nav">
                         <ul>
                             <!-- <li><a href=" {% url 'rooms:home' %} " class="active">Home</a></li> -->
-                            <li><a href=" {% url 'rooms:home' %} ">Home</a>
+                            <li><a href=" {% url 'rooms:home' %} ">Rooms</a></li>
+                            <li class="dropdown-button">
+                                <a href=" # ">Service</a>
+                                <div class="dropdown-menu-item">
+                                    <ul>
+                                        <li>
+                                            <a href=" {% url 'hotel_services:all_services' %} "> Subscription </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> One time </a>
+                                        </li>
+                                        <li>
+                                            
+                                            {% if user.is_authenticated %}
+                                                <a href=" {% url 'hotel_services:fetch_guest_subscriptions' %} ">My Subscriptions</a>
+                                            {% endif %}
+                                                
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <li class="dropdown-button">
                                 <a href="#">Account</a>
                                 <div class="dropdown-menu-item">
                                     <ul>
                                         <li>
-                                            <a> Change Password </a>
+                                            <a href="#"> Change Password </a>
                                         </li>
                                         <li>
-                                            <a> Reset Password </a>
+                                            <a href="#"> Reset Password </a>
                                         </li>
-                                        
+                                        <li>
+                                
+                                            {% if user.is_authenticated %}
+                                            <a href=" {% url 'account_logout' %} ">Logout</a>
+                                            {% else %}
+                                            <a href=" {% url 'account_login' %} ">Login</a>
+                                            {% endif %}
+                                                
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
                             <li>
-                                <a href=" {% url 'guest_reservations:all_reservations' %} ">Reservations</a>
-                            
-                            </li>
-                            <li>
-                                
-                                {% if user.is_authenticated %}
-                                <a href=" {% url 'account_logout' %} ">Logout</a>
-                                {% else %}
-                                <a href=" {% url 'account_login' %} ">Login</a>
-                                {% endif %}
-                                    
+                                <a href=" {% url 'guest_reservations:all_reservations' %} ">Reservation</a>
                             </li>
                         </ul>
                     </nav>		
@@ -92,25 +109,25 @@ http://www.templatemo.com/tm-475-holiday
             <ul class="slides">
             <li class="flex-active-slide" style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 1; display: block; z-index: 2;">
                 <div class="tm-banner-inner">
-                    <h1 class="tm-banner-title">Find <span class="tm-yellow-text">Tour</span> Programs</h1>
-                    <p class="tm-banner-subtitle">For Your Destinations</p>
-                    <a href="#more" class="tm-banner-link">Learn More</a>	
+                    <h1 class="tm-banner-title">Leisure <span class="tm-yellow-text">Inn</span> .</h1>
+                    <p class="tm-banner-subtitle">Your Second Home</p>
+                    <!-- <a href="#more" class="tm-banner-link">Learn More</a>	 -->
                 </div>
                 <img src="{% static 'img/banner-2.jpg' %}" draggable="false">
             </li>
             <li style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1;" class="">
                 <div class="tm-banner-inner">
-                    <h1 class="tm-banner-title">Lorem <span class="tm-yellow-text">Ipsum</span> Dolor</h1>
-                    <p class="tm-banner-subtitle">Wonderful Destinations</p>
-                    <a href="#more" class="tm-banner-link">Learn More</a>	
+                    <h1 class="tm-banner-title">Free <span class="tm-yellow-text">Your</span> Mind</h1>
+                    <p class="tm-banner-subtitle">Relax</p>
+                    <!-- <a href="#more" class="tm-banner-link">Learn More</a>	 -->
                 </div>
                 <img src="{% static 'img/banner-3.jpg' %}" draggable="false">
             </li>
             <li style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1;" class="">
                 <div class="tm-banner-inner">
-                    <h1 class="tm-banner-title">Proin <span class="tm-yellow-text">Gravida</span> Nibhvell</h1>
-                    <p class="tm-banner-subtitle">Velit Auctor</p>
-                    <a href="#more" class="tm-banner-link">Learn More</a>	
+                    <h1 class="tm-banner-title">Time <span class="tm-yellow-text">To</span> Fly</h1>
+                    <p class="tm-banner-subtitle">Let's Take You There</p>
+                    <!-- <a href="#more" class="tm-banner-link">Learn More</a>	 -->
                 </div>
             <img src="{% static 'img/banner-1.jpg' %}" draggable="false">
             </li>

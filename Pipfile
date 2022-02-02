@@ -17,6 +17,7 @@ pinax-messages = "*"
 channels = "*"
 channels-redis = "*"
 django-webpush = "*"
+requests = "*"
 
 [dev-packages]
 

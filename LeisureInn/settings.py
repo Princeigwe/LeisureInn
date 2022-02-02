@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'guest_reservations.apps.GuestReservationsConfig',
     'guest_chatRoom.apps.GuestChatroomConfig',
+    'hotel_services.apps.HotelServicesConfig',
     
     # 3rd party apps
     'crispy_forms',
