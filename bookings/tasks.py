@@ -1,4 +1,4 @@
-from celery import Celery, app
+from celery import Celery, app # app is a decorator
 from rooms.models import Room
 from django.core.mail import send_mail
 from .models import Booking
