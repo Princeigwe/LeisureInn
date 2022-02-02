@@ -14,7 +14,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 class GuestCreatedSubscriptionAdmin(admin.ModelAdmin):
     model = GuestCreatedSubscription
-    list_display = ['id', 'subscription']
+    list_display = ['id', 'subscription', 'guest', 'date_created', 'payment_id', 'date_cancelled']
     
     def subscription(self, obj):
         return obj.service.name

@@ -1,11 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-
-from LeisureInn.settings import SECRET_KEY
 from .models import Service, Subscription, GuestCreatedSubscription
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.conf import settings
-
 from datetime import datetime
 import requests
 from requests.adapters import HTTPAdapter
@@ -52,6 +48,12 @@ def subscription_payment_process(request, subscription_id):
     except ConnectionError as ce:
         print(ce)
     
+    subscription_post_request_response_json = subscription_post_request.json() # return response object of subscription_post_request in json format 
+    print(subscription_post_request_response_json['data']['id']) # printing the payment id
+    
+    # storing payment_id of subscription in session
+    request.session['payment_id'] = subscription_post_request_response_json['data']['id']
+    
     user = request.user
     
     # getting the current time
@@ -82,8 +84,46 @@ def subscription_payment_process(request, subscription_id):
 def subscription_payment_successful(request, id):
     subscription = get_object_or_404(Subscription, id=id)
     guest = request.user
-    guestCreatedSubscription = GuestCreatedSubscription.objects.create(subscription=subscription, guest=guest)
+    payment_id = request.session['payment_id']
+    guestCreatedSubscription = GuestCreatedSubscription.objects.create(subscription=subscription, guest=guest, payment_id=payment_id)
     guestCreatedSubscription.save()
     return render(request, 'hotel_services/service_payment_successful.html', {
         'subscription': subscription,
     })
+
+
+@login_required
+def fetch_guest_subscriptions(request):
+    """fetching all the created subscriptions of the guest"""
+    user = request.user
+    guestCreatedSubscriptions = GuestCreatedSubscription.objects.filter(guest__email=user.email)
+    return render(request, 'hotel_services/guest_created_subscriptions.html', {'guestCreatedSubscriptions': guestCreatedSubscriptions})
+
+
+def cancel_subscription_payment_plan(request, id):
+    """this is the flutterwave cancel subscription recurring payment process"""
+    flutterwave_cancel_payment_adapter = HTTPAdapter(max_retries=5)
+    session = requests.Session()
+    seckey = settings.FLUTTERWAVE_TEST_SECRET_KEY
+
+    session.mount("https://api.ravepay.co/v2/gpx/paymentplans/{id}/cancel", flutterwave_cancel_payment_adapter)
+    
+    guestCreatedSubscription = get_object_or_404(GuestCreatedSubscription, id=id)
+    payment_id = guestCreatedSubscription.payment_id # to be used as id in the url endpoint
+    
+    url = "https://api.ravepay.co/v2/gpx/paymentplans/{id}/cancel".format(id=payment_id)
+    
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }
+    
+    payload = dict(seckey=seckey)
+    try:
+        subscription_cancel_request= session.post(url=url, json=payload, headers=headers)
+        print(subscription_cancel_request.text)
+    except ConnectionError as ce:
+        print(ce)
+    guestCreatedSubscription.date_cancelled = datetime.now()
+    guestCreatedSubscription.save()
+    return render(request, 'hotel_services/service_payment_cancelled.html')
