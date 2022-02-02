@@ -124,6 +124,9 @@ def cancel_subscription_payment_plan(request, id):
         print(subscription_cancel_request.text)
     except ConnectionError as ce:
         print(ce)
+    
+    #  making update to guestCreatedSubscription model
     guestCreatedSubscription.date_cancelled = datetime.now()
+    guestCreatedSubscription.cancelled = True
     guestCreatedSubscription.save()
     return render(request, 'hotel_services/service_payment_cancelled.html')

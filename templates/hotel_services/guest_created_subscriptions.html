@@ -28,27 +28,34 @@
                                         <p class="text-uppercase margin-bottom-20">{{guestCreatedSubscription.subscription}}</p>	
                                         <p class="gray-text">{{guestCreatedSubscription.subscription.plan}} PLAN</p>
                                     </div>
-                                    <!-- <div class="tm-tours-box-1-info-right">
+                                    <div class="tm-tours-box-1-info-right">
                                         <p class="gray-text tours-1-description">
-                                            <b>Service</b>
-                                            <ul>
+                                            <b> NGN{{guestCreatedSubscription.subscription.price}}/{{guestCreatedSubscription.subscription.days}} days </b>
+                                            <!-- <ul>
                                                 <li>{{reservation.booking.room.amenities_type.first_item}}</li>
                                                 <li>{{reservation.booking.room.amenities_type.second_item}}</li>
                                                 <li>{{reservation.booking.room.amenities_type.third_item}}</li>
                                                 <li>{{reservation.booking.room.amenities_type.fourth_item}}</li>
                                                 <li>{{reservation.booking.room.amenities_type.fifth_item}}</li>
-                                            </ul>
+                                            </ul> -->
 
                                         </p>	
-                                    </div>							 -->
+                                    </div>							
                                 </div>
                                 <div class="tm-tours-box-1-link">
+                                    
+                                    {% if guestCreatedSubscription.cancelled %}
+                                        <div class="tm-tours-box-1-link-left">
+                                            <p>Cancelled</p>
+                                        </div>
+                                        <a href="#" class="tm-tours-box-1-link-right"></a>
+                                    {% else %}
                                     <div class="tm-tours-box-1-link-left">
-                                        <!-- N{{room.room_price}} / night -->
+                                        <!-- <p>Cancelled</p> -->
                                     </div>
-                                    <a href=" {% url 'hotel_services:cancel_subscription_payment' guestCreatedSubscription.id %} " class="tm-tours-box-1-link-right">
-                                        Cancel
-                                    </a>							
+                                    <a href=" {% url 'hotel_services:cancel_subscription_payment' guestCreatedSubscription.id %} " class="tm-tours-box-1-link-right">Cancel</a>
+                                    {% endif %}
+                                        							
                                 </div>
                             </div>					
                         </div>
