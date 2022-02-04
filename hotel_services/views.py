@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
-from .tasks import service_subscription_confirmation_email
+from .tasks import service_subscription_confirmation_email, one_time_payment_confirmation_email
 
 flutterwave_adapter = HTTPAdapter(max_retries=5)
 session = requests.Session()
@@ -171,12 +171,13 @@ def one_time_service_payment_successful(request, id):
         the one time payments guest made  after transaction is successful from the
         'one_time_service_payment_process' view function
     """
-    service = OneTimeService.objects.get(service_id=id)
+    one_time_service = OneTimeService.objects.get(service_id=id)
     guest = request.user
     paid = True
     paid_date = datetime.now()
-    guestOneTimeServicePayment = GuestOneTimeServicePayment.objects.create(service=service, guest=guest, paid=paid, paid_date=paid_date)
+    guestOneTimeServicePayment = GuestOneTimeServicePayment.objects.create(service=one_time_service, guest=guest, paid=paid, paid_date=paid_date)
     guestOneTimeServicePayment.save()
+    one_time_payment_confirmation_email.delay(guestOneTimeServicePayment.id) # add task to queue
     return render(request, 'hotel_services/one_time_service_payment_successful.html')
 
 
