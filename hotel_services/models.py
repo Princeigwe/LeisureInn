@@ -1,4 +1,5 @@
 from datetime import datetime
+from pyexpat import model
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.timezone import now
@@ -45,3 +46,21 @@ class GuestCreatedSubscription(models.Model):
     
     def __str__(self):
         return str(self.subscription.service.name)
+
+
+class OneTimeService(models.Model):
+    service = models.OneToOneField(Service, on_delete=models.CASCADE, related_name='one_time_service')
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    def __str__(self):
+        return str(self.service)
+
+
+class GuestOneTimeServicePayment(models.Model):
+    service = models.ForeignKey(OneTimeService, on_delete=models.SET_NULL, null=True)
+    guest = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    paid = models.BooleanField(default=True)
+    paid_date = models.DateTimeField(default=now)
+    
+    def __str__(self):
+        return str(self.service.name)

@@ -32,8 +32,8 @@
                             <p class="tm-home-box-3-description"> {{service.description}} </p>
                             <div class="tm-home-box-2-container">
                             <!-- <a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a> -->
-                            <a href=" {% url 'hotel_services:service_subscriptions' service.name service.id %} " class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3"> {{service.name}} </span></a>
-                            <a href=" {% url 'hotel_services:service_subscriptions' service.name service.id %} " class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
+                            <a href=" {% url 'hotel_services:one_time_service_payment_process' service.id %} " class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3"> {{service.name}} </span></a>
+                            <a href=" {% url 'hotel_services:one_time_service_payment_process' service.id %}  " class="tm-home-box-2-link"><i> NGN {{service.one_time_service.price}} </i></a>
                         </div>
                         </div>						
                     </div>					

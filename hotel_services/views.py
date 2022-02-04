@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Service, Subscription, GuestCreatedSubscription
+from .models import OneTimeService, Service, Subscription, GuestCreatedSubscription, GuestOneTimeServicePayment
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from datetime import datetime
@@ -102,6 +102,7 @@ def fetch_guest_subscriptions(request):
     return render(request, 'hotel_services/guest_created_subscriptions.html', {'guestCreatedSubscriptions': guestCreatedSubscriptions})
 
 
+@login_required
 def cancel_subscription_payment_plan(request, id):
     """this is the flutterwave cancel subscription recurring payment process"""
     flutterwave_cancel_payment_adapter = HTTPAdapter(max_retries=5)
@@ -132,3 +133,52 @@ def cancel_subscription_payment_plan(request, id):
     guestCreatedSubscription.cancelled = True
     guestCreatedSubscription.save()
     return render(request, 'hotel_services/service_payment_cancelled.html')
+
+
+def one_time_services(request):
+    """this is a view to create services for one time payment,
+    the current service page shows link for the subscription plans
+    """
+    services = Service.objects.all()
+    return render(request, 'hotel_services/one_time_services.html', {'services': services})
+
+
+def one_time_service_payment_process(request, service_id):
+    """this is the process for one time service payment"""
+    now = datetime.now()
+    user = request.user
+    publicKey = settings.FLUTTERWAVE_TEST_PUBLIC_KEY
+    service = get_object_or_404(Service, id=service_id)
+    customer_email = user.email
+    customer_phone = user.mobile
+    amount = int(service.one_time_service.price)
+    request.session['amount_session_data'] = amount
+    tx_ref = "lSriN9302-{service_id}-{now}".format(service_id=service.id, now=now)
+    return render(request, 'hotel_services/one_time_service_payment_process.html',
+                {
+                    'publicKey': publicKey,
+                    'customer_email': customer_email,
+                    'customer_phone': customer_phone,
+                    'amount': amount,
+                    'tx_ref': tx_ref,
+                    'id':service.id,
+                }
+    )
+
+
+def one_time_service_payment_successful(request, id):
+    """this function creates a GuestOneTimeServicePayment to keep track of the
+        the one time payments guest made  after transaction is successful from the
+        'one_time_service_payment_process' view function
+    """
+    service = OneTimeService.objects.get(service_id=id)
+    guest = request.user
+    paid = True
+    paid_date = datetime.now()
+    guestOneTimeServicePayment = GuestOneTimeServicePayment.objects.create(service=service, guest=guest, paid=paid, paid_date=paid_date)
+    guestOneTimeServicePayment.save()
+    return render(request, 'hotel_services/one_time_service_payment_successful.html')
+
+
+def one_time_service_payment_failed(request):
+    return render(request, 'hotel_services/one_time_service_payment_failed.html')
