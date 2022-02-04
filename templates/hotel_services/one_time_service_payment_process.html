@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block title %}
+    One Time service Payment |  Leisure Inn
+{% endblock title %}
+
+
+{% block content %}
+<div class="container">
+    <form>
+        <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
+        <div class="form-group tm-yellow-gradient-bg text-center">
+            <button type="button"  class="tm-yellow-btn" onclick="payWithRave()">Pay Now</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const publicKey = "{{publicKey}}";
+    const customer_email = "{{customer_email}}";
+    const amount = "{{amount}}";
+    const customer_phone = "{{customer_phone}}";
+    const tx_ref = "{{tx_ref}}";
+
+    function payWithRave() {
+        var x = getpaidSetup({
+            PBFPubKey: publicKey,
+            customer_email: customer_email,
+            amount: amount,
+            customer_phone: customer_phone,
+            currency: "NGN",
+            txref: tx_ref,
+            custom_title: "Leisure Inn",
+            onclose: function() {},
+            callback: function(response) {
+                var txref = response.tx.txRef;
+                console.log("This is the response returned after a charge", response);
+                if (
+                        response.tx.chargeResponseCode == "00" ||
+                        response.tx.chargeResponseCode == "0"
+                    ) {
+                        window.location.href= " {% url 'hotel_services:one_time_service_payment_successful' id %} " ;
+                            // redirect to a success page
+                    } else {
+                        // redirect to a failure page.
+                        window.location.href= " {% url 'hotel_services:one_time_service_payment_failed' %} "
+                    }
+                x.close();
+            }
+        });
+    }
+</script>
+{% endblock content %}
