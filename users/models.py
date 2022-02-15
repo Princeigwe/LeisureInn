@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
-    age = models.PositiveSmallIntegerField()
+    age = models.PositiveSmallIntegerField(blank=True, default=0)
     image = models.ImageField(upload_to='profile_pictures/', blank=True)
     country = models.CharField(max_length=100, blank=True)
     occupation = models.CharField(max_length=100, blank=True)

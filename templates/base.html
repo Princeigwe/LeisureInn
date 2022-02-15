@@ -81,6 +81,13 @@ http://www.templatemo.com/tm-475-holiday
                                             <a href="#"> Reset Password </a>
                                         </li>
                                         <li>
+                                            
+                                            {% if user.is_authenticated %}
+                                                <a href=" {% url 'guest_chatRoom:rooms' %} ">Chat</a>
+                                            {% endif %}
+                                                
+                                        </li>
+                                        <li>
                                 
                                             {% if user.is_authenticated %}
                                             <a href=" {% url 'account_logout' %} ">Logout</a>
@@ -89,6 +96,7 @@ http://www.templatemo.com/tm-475-holiday
                                             {% endif %}
                                                 
                                         </li>
+                                        
                                     </ul>
                                 </div>
                             </li>
