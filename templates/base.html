@@ -96,6 +96,13 @@ http://www.templatemo.com/tm-475-holiday
                                             {% endif %}
                                                 
                                         </li>
+                                        <li>
+                                            
+                                            {% if user.is_authenticated %}
+                                                <a href=" {% url 'users:profile-update' %} ">Update Profile</a>
+                                            {% endif %}
+                                                
+                                        </li>
                                         
                                     </ul>
                                 </div>

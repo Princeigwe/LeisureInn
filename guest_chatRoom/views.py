@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from .models import GuestChatRoom, Message
 from users.models import CustomUser
+from users.forms import UserSendEmailForm
 from .forms import MessageForm
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
@@ -11,6 +12,9 @@ from django.views.decorators.http import require_POST
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+
+
+from users.tasks import send_user_email
 
 # Create your views here.
 
@@ -49,4 +53,16 @@ def room_messages(request, room_id ):
 @login_required
 def guest_chatRoom_user_bio_and_trans_data(request, room_id): # getting user bio data for now
     room = get_object_or_404(GuestChatRoom, id=room_id)
-    return render(request, 'users/user_bio_trans_data.html', {'room':room})
+    if request.method == 'POST':
+        userSendEmailForm = UserSendEmailForm(request.POST)
+        if userSendEmailForm.is_valid():
+            recipient = userSendEmailForm.cleaned_data['recipient']
+            subject = userSendEmailForm.cleaned_data['subject']
+            message = userSendEmailForm.cleaned_data['message']
+            sender = request.user.email
+            send_user_email.delay(subject, message, sender, recipient) # the background task for sending email to user for user_bio_data_page.html
+            
+            return redirect('rooms:home')
+    else:
+        userSendEmailForm = UserSendEmailForm()
+    return render(request, 'users/user_bio_trans_data.html', {'room':room, 'userSendEmailForm': userSendEmailForm })
