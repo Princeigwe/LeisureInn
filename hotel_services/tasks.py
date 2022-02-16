@@ -1,11 +1,11 @@
-from celery import Celery, app #app is a decorator
+from celery import Celery
 from .models import GuestCreatedSubscription, GuestOneTimeServicePayment
 from django.core.mail import send_mail
 
 # setting up the celery app
 app = Celery(app="LeisureInn", broker="amqp://guest:guest@rabbitmq:5672/")
 
-@app.task
+@app.task # this is a celery task
 def service_subscription_confirmation_email(guestCreatedSubscription_id):
     guestCreatedSubscription = GuestCreatedSubscription.objects.get(id=guestCreatedSubscription_id)
     subject = "Subscription Payment Plan Created"
@@ -13,7 +13,7 @@ def service_subscription_confirmation_email(guestCreatedSubscription_id):
     send_mail(subject, message, "admin@leisureinn@gmail.com", [guestCreatedSubscription.guest.email], fail_silently=False)
 
 
-@app.task
+@app.task  # this is a celery task
 def one_time_payment_confirmation_email(id):
     guestOneTimeServicePayment = GuestOneTimeServicePayment.objects.get(id=id)
     subject = "Subscription Payment Plan Created"
