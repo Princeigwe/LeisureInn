@@ -135,6 +135,23 @@
                 </div>
             </div>
         </div>
+        <div class="email-container">
+            <form action="" class="email-form" method="post">
+                {% csrf_token %}
+                <!-- <label for="email"></label> -->
+                
+                {% if user.is_superuser %}
+                    <input type="email" placeholder="Enter email " name='recipient' value="{{room.guest.email}}" >
+                    {% else %}
+                    <input type="email" placeholder="Enter email " name='recipient' value="{{room.admin.email}}" >
+                {% endif %}
+                    
+                <input type="text" name="subject" placeholder="Subject " >
+                <br/>
+                <textarea name="message" id="" cols="30" rows="10"></textarea>
+                <button type= "submit">submit</button>
+            </form>
+        </div>
         <!-- <div>
             <div class="row">
                 <div class="col-md-6">
@@ -575,6 +592,57 @@ ul.summary-list > li:last-child  {
 
 .activity-desk .album a:last-child{
     margin-right: 0px;
+}
+
+.email-container{
+    /* width: 100%;background-color: red; */
+
+}
+
+.email-form{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.email-form input{
+    width: 50%;
+    border:0px solid black;
+
+    margin:10px;
+    padding:5px;
+    border-radius: 10px;
+}
+.email-form textarea{
+    width: 100%;
+    margin:10px;
+    border:0px solid black;
+    padding:5px;
+    border-radius: 10px;
+}
+
+.email-form button{
+    width: 20%;
+    height: 60px;
+    padding:5px;
+    background-color: grey;
+    border-radius: 10px;
+    color:white;
+    font-weight: bold;
+    text-transform: capitalize;
+    border:0px solid black;
+}
+.email-form button:hover{
+    width: 20%;
+    padding:5px;
+    background-color: orange;
+    border-radius: 10px;
+    color:white;
+    font-weight: bold;
+    text-transform: capitalize;
+    border:0px solid black;
 }
 </style>
 

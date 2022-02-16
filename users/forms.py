@@ -16,3 +16,9 @@ class UserEditForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ('image', 'first_name', 'last_name', 'country', 'age', 'occupation', 'birthday', 'mobile')
+
+
+class UserSendEmailForm(forms.Form):
+    recipient = forms.EmailField()
+    subject = forms.CharField(max_length=50)
+    message = forms.CharField(error_messages={'required': "This field is required"})
