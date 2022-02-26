@@ -5,6 +5,8 @@ from django.test import TestCase
 from .models import Booking
 from rooms.models import Room, Amenities
 import datetime
+from .views import booking_failed, booking_successful
+from django.urls import reverse
 
 # Create your tests here.
 
@@ -44,4 +46,14 @@ class BookingTests(TestCase):
         elif response == self.client.post('bookings/booking_process/1/', data={'guest_telephone': '0909090909', 'amount':10000}):
             self.assertRedirects(response, 'payments/1/', status_code=302, target_status_code=200, fetch_redirect_response=True)
     
+
+    ## for dome unknown reason, test_booking_failed_view and test_booking_successful_page tests for their respective views, says the views don;t have templates.
     
+    def test_booking_failed_view(self):
+        response = self.client.get(reverse('bookings:booking_failed'))
+        self.assertEqual(response.resolver_match.func, booking_failed)
+    
+    
+    def test_booking_successful_page(self):
+        response = self.client.get(reverse('bookings:booking_successful'))
+        self.assertEqual(response.resolver_match.func, booking_successful)
