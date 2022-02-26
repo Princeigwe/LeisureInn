@@ -1,5 +1,3 @@
-from audioop import reverse
-from distutils.command.check import check
 from django.http import response
 from django.test import TestCase
 from .models import Booking
@@ -37,6 +35,7 @@ class BookingTests(TestCase):
             amount = 10000,
             paid = True,
         )
+        return booking
     
     
     def test_booking_form_page(self):
@@ -47,13 +46,15 @@ class BookingTests(TestCase):
             self.assertRedirects(response, 'payments/1/', status_code=302, target_status_code=200, fetch_redirect_response=True)
     
 
-    ## for dome unknown reason, test_booking_failed_view and test_booking_successful_page tests for their respective views, says the views don;t have templates.
+    ## to test views that have authentication required, comment the @login_required decorator
     
     def test_booking_failed_view(self):
         response = self.client.get(reverse('bookings:booking_failed'))
         self.assertEqual(response.resolver_match.func, booking_failed)
+        self.assertTemplateUsed(response, 'booking/booking_failed.html')
     
     
     def test_booking_successful_page(self):
         response = self.client.get(reverse('bookings:booking_successful'))
         self.assertEqual(response.resolver_match.func, booking_successful)
+        self.assertTemplateUsed(response, 'booking/booking_successful.html')
