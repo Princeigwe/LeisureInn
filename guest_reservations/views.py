@@ -7,10 +7,10 @@ from bookings.models import Booking
 # Create your views here.
 
 
-@login_required
+# @login_required
 def all_reservations(request):
     """ function to get all reservations of the logged in guest """
-    guest_reservations = ReservationItem.objects.all()
+    guest_reservations = ReservationItem.objects.filter(reservation_list__guest=request.user)
     return render(request, 'guest_reservation/reservations.html', {'guest_reservations': guest_reservations})
 
 

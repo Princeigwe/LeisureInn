@@ -18,18 +18,7 @@ from users.tasks import send_user_email
 
 # Create your views here.
 
-def room_testing(request):
-    """getting list of rooms for both guest and admin.
-    if the logged in user is an admin, get all rooms.
-    if the logged in user is a guest, get rooms of the admin users
-    """
-    user = request.user
-    if user.is_superuser:
-        rooms = GuestChatRoom.objects.all()
-    else:
-        rooms = GuestChatRoom.objects.filter(user = user.is_superuser)
-    pass
-
+# remove the @login_required decorators to test the views
 
 @login_required
 def rooms(request):
