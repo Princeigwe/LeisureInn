@@ -9,6 +9,8 @@ from guest_reservations.models import ReservationItem, GuestReservationList
 
 # Create your views here.
 
+# remove the @login_required decorators to test the views
+
 @login_required
 def booking_process(request, room_id):
     room = get_object_or_404(Room, id=room_id)

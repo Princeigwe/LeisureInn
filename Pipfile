@@ -18,6 +18,7 @@ channels = "*"
 channels-redis = "*"
 django-webpush = "*"
 requests = "*"
+pylint = "*"
 
 [dev-packages]
 

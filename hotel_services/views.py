@@ -29,6 +29,7 @@ def service_subscriptions(request, service_id, service_name):
     return render(request, 'hotel_services/hotel_services_detail.html', {'subscriptions': subscriptions})
 
 
+@login_required
 def subscription_payment_process(request, subscription_id):
     """this is the subscription creation process.
         This view makes a POST request to flutterwave recurring payment endpoint 
@@ -82,6 +83,7 @@ def subscription_payment_process(request, subscription_id):
     })
 
 
+@login_required
 def subscription_payment_successful(request, id):
     subscription = get_object_or_404(Subscription, id=id)
     guest = request.user
