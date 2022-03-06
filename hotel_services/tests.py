@@ -1,6 +1,3 @@
-from ast import arg
-import re
-from urllib import response
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from .models import Service, Subscription, GuestCreatedSubscription, OneTimeService, GuestOneTimeServicePayment
