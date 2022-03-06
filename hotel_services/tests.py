@@ -1,9 +1,11 @@
+from ast import arg
+import re
 from urllib import response
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from .models import Service, Subscription, GuestCreatedSubscription, OneTimeService, GuestOneTimeServicePayment
 from django.urls import reverse
-# from django.test.utils import setup_test_environment, teardown_test_environment
+from django.test.utils import setup_test_environment,teardown_test_environment
 
 User = get_user_model()
 
@@ -59,6 +61,9 @@ class HotelServiceTests(TestCase):
             paid = True,
             paid_date = '2022-12-29'
         )
+        teardown_test_environment()
+        setup_test_environment()
+    
     
     def test_database_models(self):
         """testing created data models"""
@@ -87,31 +92,27 @@ class HotelServiceTests(TestCase):
         self.assertContains(response, text='Standard') # checking if "Standard" is in the template
         self.assertTemplateUsed(response, 'hotel_services/hotel_services_detail.html')
 
-    # not sure what error is happening here
-    # def test_subscription_payment_successful(self):
-    #     """testing the subscription_payment_successful view function"""
-    #     subscription = Subscription.objects.get(id=1)
-    #     self.client.login(username='testuser@gmail.com', password='testpass123')
-    #     session = self.client.session
-    #     session['payment_id'] = 0
-    #     response = self.client.get(reverse('hotel_services:subscription_payment_successful', args=['1']))
-    #     self.assertTemplateUsed(response, 'hotel_services/service_payment_successful.html')
 
-    # def test_fetch_guest_subscriptions(self):
-    #     self.client.login(username='testuser', password='testpass123')
-    #     user = User.objects.get(email='testuser@gmail.com')
-    #     guestCreatedSubscriptions = GuestCreatedSubscription.objects.filter(guest__email=user.email)
-    #     response = self.client.get(reverse('hotel_services:fetch_guest_subscriptions'))
-    #     self.assertEqual(response.context['guestCreatedSubscriptions'], guestCreatedSubscriptions)
-        
+    def test_fetch_guest_subscriptions(self):
+        self.client.login(username='testuser@gmail.com', password='testpass123')
+        user = User.objects.get(email='testuser@gmail.com')
+        guestCreatedSubscriptions = GuestCreatedSubscription.objects.filter(guest__email=user.email)
+        response = self.client.get(reverse('hotel_services:fetch_guest_subscriptions'))
+        self.assertTemplateUsed(response, template_name='hotel_services/guest_created_subscriptions.html')
+        self.assertQuerysetEqual(response.context['guestCreatedSubscriptions'], guestCreatedSubscriptions, transform=lambda x: x) # testing the context of response
 
-    def test_cancel_subscription_payment_plan(self):
-        pass
     def test_one_time_services(self):
-        pass
+        response = self.client.get(reverse('hotel_services:one_time_services'))
+        services = Service.objects.all()
+        self.assertTemplateUsed(response, template_name='hotel_services/one_time_services.html')
+        self.assertQuerysetEqual(response.context['services'],  services, transform=lambda x: x) # testing the context of response
+
     def test_one_time_service_payment_process(self):
-        pass
-    def test_one_time_service_payment_successful(self):
-        pass
+        self.client.login(username='testuser@gmail.com', password='testpass123')
+        service = Service.objects.get(id=1)
+        response = self.client.get(reverse('hotel_services:one_time_service_payment_process', args=[ int(service.id) ] ))
+        self.assertTemplateUsed(response, template_name='hotel_services/one_time_service_payment_process.html')
+
     def test_one_time_service_payment_failed(self):
-        pass
+        response = self.client.get(reverse('hotel_services:one_time_service_payment_failed'))
+        self.assertTemplateUsed(response, template_name='hotel_services/one_time_service_payment_failed.html')
