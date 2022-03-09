@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.8.10
+    steps:
+      - checkout
+      - run:
+          command: |
+            sudo pip install pipenv
+            pipenv install
+      - run:
+          name: Run django Tests
+          command: |
+            pipenv run python manage.py test
+      - store_artifacts:
+          path: test-results
+          destination: tr1
