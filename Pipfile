@@ -19,6 +19,8 @@ channels-redis = "*"
 django-webpush = "*"
 requests = "*"
 pylint = "*"
+django-environ = "*"
+twisted = "*"
 
 [dev-packages]
 

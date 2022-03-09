@@ -16,6 +16,12 @@ from pathlib import Path
 from django.contrib.auth import get_user_model
 
 
+"""THIS ENVIRON SETUP HERE WAS THE SOLUTION TO SECRET KEY BECOMING INVISIBLE TO CELERY AS A ENVIRONMENT VARIABLE"""
+import environ
+env = environ.Env()
+environ.Env.read_env()
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = '6d@pn5-cdm(j#u9cfpc%ee4%w=e(08zd-d#w$bffb_e6yu'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
