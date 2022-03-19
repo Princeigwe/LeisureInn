@@ -10,9 +10,22 @@ from django.contrib.auth.decorators import login_required
 def update_user_detail(request):
     user = request.user
     if request.method == "POST":
-        user_form = UserEditForm(instance=request.user, data=request.POST, files=request.FILES)
+        # user_form = UserEditForm(instance=request.user, data=request.POST, files=request.FILES)
+        user_form = UserEditForm(data=request.POST, files=request.FILES)
         if user_form.is_valid():
-            user_form.save()
+            # user_form.save()
+
+            # ('image', 'first_name', 'last_name', 'country', 'age', 'occupation', 'birthday', 'mobile')
+            user.image = user_form.cleaned_data["image"]
+            user.first_name = user_form.cleaned_data["first_name"]
+            user.last_name = user_form.cleaned_data["last_name"]
+            user.country = user_form.cleaned_data["country"]
+            user.age = user_form.cleaned_data["age"]
+            user.occupation = user_form.cleaned_data["occupation"]
+            user.birthday = user_form.cleaned_data["birthday"]
+            user.mobile = user_form.cleaned_data["mobile"]
+            user.save()
+
             return redirect('rooms:home')
     else:
         user_form = UserEditForm(instance=request.user, files=request.FILES)

@@ -1,3 +1,4 @@
+from email.mime import image
 from users.models import CustomUser
 from django import forms
 
@@ -13,6 +14,14 @@ from django import forms
 #         user.save()
 
 class UserEditForm(forms.ModelForm):
+    image = forms.ImageField(required=True)
+    first_name = forms.CharField(max_length=90, required=True)
+    last_name = forms.CharField(max_length=90, required=True)
+    country = forms.CharField(max_length=90, required=True)
+    age = forms.IntegerField(min_value=18, max_value=120, required=True)
+    occupation = forms.CharField(max_length=30, required=True)
+    birthday = forms.DateField(required=True)
+    mobile = forms.CharField(max_length=12, required=True)
     class Meta:
         model = CustomUser
         fields = ('image', 'first_name', 'last_name', 'country', 'age', 'occupation', 'birthday', 'mobile')
