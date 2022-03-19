@@ -87,7 +87,8 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend' # making django-allauth authentication mode default
 ]
 
-LOGIN_REDIRECT_URL = 'rooms:home'
+# LOGIN_REDIRECT_URL = 'rooms:home'
+LOGIN_REDIRECT_URL = 'users:profile-update'
 ACCOUNT_LOGOUT_REDIRECT = 'rooms:home'
 
 # EXTRA DJANGO-ALLAUTH SETTINGS
