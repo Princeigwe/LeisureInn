@@ -41,7 +41,7 @@ class GuestCreatedSubscription(models.Model):
     guest = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     cancelled = models.BooleanField(default=False)
     date_created = models.DateTimeField(default=now)
-    date_cancelled = models.DateTimeField(blank=True)
+    date_cancelled = models.DateTimeField(blank=True, null=True)
     payment_id = models.IntegerField(default=0)
     
     def __str__(self):

@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
-from .tasks import service_subscription_confirmation_email, one_time_payment_confirmation_email
+from .tasks import service_subscription_confirmation_email, one_time_payment_confirmation_email, subscription_payment_API_call
 
 flutterwave_adapter = HTTPAdapter(max_retries=5)
 session = requests.Session()
@@ -41,16 +41,36 @@ def subscription_payment_process(request, subscription_id):
     name = str(subscription.service)
     interval = "every {subscription_days} days".format(subscription_days=subscription.days)
     seckey =  settings.FLUTTERWAVE_TEST_SECRET_KEY
+
+###################################################################################################
     
-    url = "https://api.ravepay.co/v2/gpx/paymentplans/create" ## payment plan endpoint
-    payload = dict(amount=amount, name=name, interval=interval, seckey=seckey)
-    try:
-        subscription_post_request= session.post(url=url, json=payload)
-        print(subscription_post_request.text)
-    except ConnectionError as ce:
-        print(ce)
+    # url = "https://api.ravepay.co/v2/gpx/paymentplans/create" ## payment plan endpoint
+    # payload = dict(amount=amount, name=name, interval=interval, seckey=seckey)
+
+####################################################################################################
+
+    # creating session keys to be used in tasks.py subscription_payment_process api call
+    request.session['amount'] = amount
+    request.session['name'] = name
+    request.session['interval'] = interval
+    request.session['seckey'] = seckey
+
+
+################################################################################################################### 
+
+    # try:
+    #     subscription_post_request= session.post(url=url, json=payload)
+    #     print(subscription_post_request.text)
+    # except ConnectionError as ce:
+    #     print(ce)
     
-    subscription_post_request_response_json = subscription_post_request.json() # return response object of subscription_post_request in json format 
+    # subscription_post_request_response_json = subscription_post_request.json() # return response object of subscription_post_request in json format 
+
+
+#########################################################################################################################
+
+    subscription_payment_API_call(request) # comment this if it doesn't work properly
+    subscription_post_request_response_json = request.session['subscription_post_request_response'] ## comment this if it doesn't work
     print(subscription_post_request_response_json['data']['id']) # printing the payment id
     
     # storing payment_id of subscription in session
