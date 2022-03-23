@@ -25,7 +25,6 @@ def one_time_payment_confirmation_email(id):
     send_mail(subject, message, "admin@leisureinn@gmail.com", [guestOneTimeServicePayment.guest.email], fail_silently=False)
 
 
-# @app.task  # this is a celery task
 @shared_task ## shared_task decorator helps you use the return value in the views.py, as long as a result backend is provided.
 def subscription_payment_API_call(amount, name, interval, seckey):
 
@@ -37,9 +36,30 @@ def subscription_payment_API_call(amount, name, interval, seckey):
     payload = dict(amount=amount, name=name, interval=interval, seckey=seckey)
 
     try:
-        subscription_post_request= session.post(url=url, json=payload)
+        subscription_post_request= session.post(url=url, json=payload) # making a POST request to the url with the payload
         print(subscription_post_request.text)
     except ConnectionError as ce:
         print(ce)
     
-    return subscription_post_request.json()
+    return subscription_post_request.json() ## returning json response
+
+
+@app.task  # this is a celery task
+def cancel_subscription_payment_API_call(payment_id, seckey):
+    flutterwave_cancel_payment_adapter = HTTPAdapter(max_retries=5)
+    session = requests.Session()
+    session.mount("https://api.ravepay.co/v2/gpx/paymentplans/{id}/cancel", flutterwave_cancel_payment_adapter)
+
+    url = "https://api.ravepay.co/v2/gpx/paymentplans/{id}/cancel".format(id=payment_id)
+    
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }
+    
+    payload = dict(seckey=seckey)
+    try:
+        subscription_cancel_request= session.post(url=url, json=payload, headers=headers)
+        print(subscription_cancel_request.text)
+    except ConnectionError as ce:
+        print(ce)
