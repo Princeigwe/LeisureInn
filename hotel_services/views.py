@@ -42,37 +42,16 @@ def subscription_payment_process(request, subscription_id):
     interval = "every {subscription_days} days".format(subscription_days=subscription.days)
     seckey =  settings.FLUTTERWAVE_TEST_SECRET_KEY
 
-###################################################################################################
-    
-    # url = "https://api.ravepay.co/v2/gpx/paymentplans/create" ## payment plan endpoint
-    # payload = dict(amount=amount, name=name, interval=interval, seckey=seckey)
-
-####################################################################################################
-
     # creating session keys to be used in tasks.py subscription_payment_process api call
     request.session['amount'] = amount
     request.session['name'] = name
     request.session['interval'] = interval
     request.session['seckey'] = seckey
-
-
-################################################################################################################### 
-
-    # try:
-    #     subscription_post_request= session.post(url=url, json=payload)
-    #     print(subscription_post_request.text)
-    # except ConnectionError as ce:
-    #     print(ce)
     
-    # subscription_post_request_response_json = subscription_post_request.json() # return response object of subscription_post_request in json format 
-
-
-#########################################################################################################################
-
-    subscription_payment_API_call.delay(amount, name, interval, seckey) # comment this if it doesn't work properly
+    subscription_payment_API_call.delay(amount, name, interval, seckey) # calling the background task, subscription_payment_API_call
     subscription_response = subscription_payment_API_call.delay(amount, name, interval, seckey)
     
-    subscription_post_request_response_json = subscription_response.get()## comment this if it doesn't work
+    subscription_post_request_response_json = subscription_response.get()## getting the result of the background task
     print(subscription_post_request_response_json['data']['id']) # printing the payment id
     
     # storing payment_id of subscription in session
