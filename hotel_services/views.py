@@ -69,8 +69,10 @@ def subscription_payment_process(request, subscription_id):
 
 #########################################################################################################################
 
-    subscription_payment_API_call(request) # comment this if it doesn't work properly
-    subscription_post_request_response_json = request.session['subscription_post_request_response'] ## comment this if it doesn't work
+    subscription_payment_API_call.delay(amount, name, interval, seckey) # comment this if it doesn't work properly
+    subscription_response = subscription_payment_API_call.delay(amount, name, interval, seckey)
+    
+    subscription_post_request_response_json = subscription_response.get()## comment this if it doesn't work
     print(subscription_post_request_response_json['data']['id']) # printing the payment id
     
     # storing payment_id of subscription in session

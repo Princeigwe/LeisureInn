@@ -1,4 +1,4 @@
-from celery import Celery
+from celery import Celery, shared_task
 from .models import GuestCreatedSubscription, GuestOneTimeServicePayment
 from django.core.mail import send_mail
 
@@ -25,13 +25,9 @@ def one_time_payment_confirmation_email(id):
     send_mail(subject, message, "admin@leisureinn@gmail.com", [guestOneTimeServicePayment.guest.email], fail_silently=False)
 
 
-@app.task  # this is a celery task
-def subscription_payment_API_call(request):
-
-    amount = request.session['amount']
-    name = request.session['name']
-    interval = request.session['interval']
-    seckey = request.session['seckey']
+# @app.task  # this is a celery task
+@shared_task ## shared_task decorator helps you use the return value in the views.py, as long as a result backend is provided.
+def subscription_payment_API_call(amount, name, interval, seckey):
 
     flutterwave_adapter = HTTPAdapter(max_retries=5)
     session = requests.Session()
@@ -46,4 +42,4 @@ def subscription_payment_API_call(request):
     except ConnectionError as ce:
         print(ce)
     
-    request.session['subscription_post_request_response'] = subscription_post_request.json()
+    return subscription_post_request.json()
