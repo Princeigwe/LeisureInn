@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
-from .tasks import service_subscription_confirmation_email, one_time_payment_confirmation_email
+from .tasks import service_subscription_confirmation_email, one_time_payment_confirmation_email, subscription_payment_API_call, cancel_subscription_payment_API_call
 
 flutterwave_adapter = HTTPAdapter(max_retries=5)
 session = requests.Session()
@@ -41,16 +41,17 @@ def subscription_payment_process(request, subscription_id):
     name = str(subscription.service)
     interval = "every {subscription_days} days".format(subscription_days=subscription.days)
     seckey =  settings.FLUTTERWAVE_TEST_SECRET_KEY
+
+    # creating session keys to be used in tasks.py subscription_payment_process api call
+    request.session['amount'] = amount
+    request.session['name'] = name
+    request.session['interval'] = interval
+    request.session['seckey'] = seckey
     
-    url = "https://api.ravepay.co/v2/gpx/paymentplans/create" ## payment plan endpoint
-    payload = dict(amount=amount, name=name, interval=interval, seckey=seckey)
-    try:
-        subscription_post_request= session.post(url=url, json=payload)
-        print(subscription_post_request.text)
-    except ConnectionError as ce:
-        print(ce)
+    subscription_payment_API_call.delay(amount, name, interval, seckey) # calling the background task, subscription_payment_API_call
+    subscription_response = subscription_payment_API_call.delay(amount, name, interval, seckey)
     
-    subscription_post_request_response_json = subscription_post_request.json() # return response object of subscription_post_request in json format 
+    subscription_post_request_response_json = subscription_response.get()## getting the result of the background task
     print(subscription_post_request_response_json['data']['id']) # printing the payment id
     
     # storing payment_id of subscription in session
@@ -107,29 +108,13 @@ def fetch_guest_subscriptions(request):
 @login_required
 def cancel_subscription_payment_plan(request, id):
     """this is the flutterwave cancel subscription recurring payment process"""
-    flutterwave_cancel_payment_adapter = HTTPAdapter(max_retries=5)
-    session = requests.Session()
-    seckey = settings.FLUTTERWAVE_TEST_SECRET_KEY
-
-    session.mount("https://api.ravepay.co/v2/gpx/paymentplans/{id}/cancel", flutterwave_cancel_payment_adapter)
     
+    seckey = settings.FLUTTERWAVE_TEST_SECRET_KEY    
     guestCreatedSubscription = get_object_or_404(GuestCreatedSubscription, id=id)
     payment_id = guestCreatedSubscription.payment_id # to be used as id in the url endpoint
     
-    url = "https://api.ravepay.co/v2/gpx/paymentplans/{id}/cancel".format(id=payment_id)
-    
-    headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-    }
-    
-    payload = dict(seckey=seckey)
-    try:
-        subscription_cancel_request= session.post(url=url, json=payload, headers=headers)
-        print(subscription_cancel_request.text)
-    except ConnectionError as ce:
-        print(ce)
-    
+    cancel_subscription_payment_API_call.delay(payment_id, seckey) # calling the background task, cancel_subscription_payment_API_call
+
     #  making update to guestCreatedSubscription model
     guestCreatedSubscription.date_cancelled = datetime.now()
     guestCreatedSubscription.cancelled = True
