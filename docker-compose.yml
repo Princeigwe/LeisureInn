@@ -40,6 +40,9 @@ services:
             - ./data/db:/var/lib/postgresql/data
         environment:
             - "POSTGRES_HOST_AUTH_METHOD=trust"
+            - POSTGRES_DB=${DATABASE_NAME}
+            - POSTGRES_USER=${DATABASE_USER}
+            - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
 
     # redis service container
     redis:
@@ -56,6 +59,8 @@ services:
         container_name: 'LeisureInn_web'
         command: python /code/manage.py runserver 0.0.0.0:8000
         environment: 
+            - DEBUG=1
+            - ENVIRONMENT=development
             - SECRET_KEY=${SECRET_KEY}
             - FLUTTERWAVE_TEST_SECRET_KEY=${FLUTTERWAVE_TEST_SECRET_KEY}
             - FLUTTERWAVE_TEST_PUBLIC_KEY=${FLUTTERWAVE_TEST_PUBLIC_KEY}
