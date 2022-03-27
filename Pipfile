@@ -21,6 +21,8 @@ requests = "*"
 pylint = "*"
 django-environ = "*"
 twisted = "*"
+whitenoise = "*"
+gunicorn = "*"
 
 [dev-packages]
 
