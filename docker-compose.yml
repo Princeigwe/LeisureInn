@@ -57,7 +57,8 @@ services:
     web:
         build: .
         container_name: 'LeisureInn_web'
-        command: python /code/manage.py runserver 0.0.0.0:8000
+        # command: python /code/manage.py runserver 0.0.0.0:8000
+        command: daphne -b 0.0.0.0 -p 8000 LeisureInn.asgi:application # running the application with Daphne
         environment: 
             - DEBUG=1
             - ENVIRONMENT=development

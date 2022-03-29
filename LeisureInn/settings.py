@@ -14,6 +14,7 @@ import os
 
 from pathlib import Path
 from django.contrib.auth import get_user_model
+import dj_database_url # package that will connect to Heroku database
 
 
 """THIS ENVIRON SETUP HERE WAS THE SOLUTION TO SECRET KEY BECOMING INVISIBLE TO CELERY AS A ENVIRONMENT VARIABLE"""
@@ -38,6 +39,8 @@ if ENVIRONMENT == 'production':
     SECURE_CONTENT_TYPE_NOSNIFF = True # 
     SESSION_COOKIE_SECURE = True # to use session cookie only over HTTPS
     CSRF_COOKIE_SECURE = True # to secure csrf cookie in HTTPS connection
+    
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -50,7 +53,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = ['0.0.0.0', '.herokuapp.com']
+ALLOWED_HOSTS = ['0.0.0.0', '.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -188,6 +191,10 @@ DATABASES = {
     }
     
 }
+
+# database connection settings for production in Heroku
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation

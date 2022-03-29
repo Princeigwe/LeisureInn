@@ -23,6 +23,7 @@ django-environ = "*"
 twisted = "*"
 whitenoise = "*"
 gunicorn = "*"
+dj-database-url = "*"
 
 [dev-packages]
 

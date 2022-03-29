@@ -1,0 +1,17 @@
+# the file that helps deploy docker images and containers on heroku
+
+setup:    # the addons that will be added for the project on heroku
+  addons:
+    - plan: heroku-postgresql
+    
+build:    # build the Dockerfile
+  docker: 
+    web: Dockerfile
+
+release:  # task to run before each release is deployed
+  image: web
+  command:
+    - python manage.py collectstatic --noinput
+
+run:      # run the application
+  web: daphne LeisureInn.asgi:application  
