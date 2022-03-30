@@ -33,11 +33,16 @@ def rooms(request):
 
 @login_required
 def room_messages(request, room_id ):
-    user_first_name = request.user.first_name
-    room = get_object_or_404(GuestChatRoom, id=room_id )
-    # localHostRoomUrl = 'http://0.0.0.0:8000/guest_chatRoom/room_messages/' + str(room.id) 
-    roomMessages = Message.objects.filter(id=room.id)
-    return render(request, 'guest_chatroom/chat_detail.html', {'room_id': room.id, 'room':room, 'roomMessages': roomMessages, 'user_first_name':user_first_name})
+    if request.user.first_name == '' and request.user.last_name == '': 
+        return redirect('users:profile-update')
+    else:
+        user_first_name = request.user.first_name
+        room = get_object_or_404(GuestChatRoom, id=room_id )
+        # localHostRoomUrl = 'http://0.0.0.0:8000/guest_chatRoom/room_messages/' + str(room.id) 
+        roomMessages = Message.objects.filter(id=room.id)
+        return render(request, 'guest_chatroom/chat_detail.html', {'room_id': room.id, 'room':room, 'roomMessages': roomMessages, 'user_first_name':user_first_name})
+
+
 
 @login_required
 def guest_chatRoom_user_bio_and_trans_data(request, room_id): # getting user bio data for now
