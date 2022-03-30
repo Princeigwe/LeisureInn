@@ -3,6 +3,8 @@
 setup:    # the addons that will be added for the project on heroku
   addons:
     - plan: heroku-postgresql
+    - plan: cloudamqp
+    - plan: heroku-redis
     
 build:    # build the Dockerfile
   docker: 

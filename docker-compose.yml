@@ -63,6 +63,10 @@ services:
             - DEBUG=1
             - ENVIRONMENT=development
             - SECRET_KEY=${SECRET_KEY}
+            - CLOUDAMQP_URL=${CLOUDAMQP_URL}
+            - REDIS_HOST=${REDIS_HOST}
+            - REDIS_PORT=${REDIS_PORT}
+            - REDIS_PASSWORD=${REDIS_PASSWORD}
             - FLUTTERWAVE_TEST_SECRET_KEY=${FLUTTERWAVE_TEST_SECRET_KEY}
             - FLUTTERWAVE_TEST_PUBLIC_KEY=${FLUTTERWAVE_TEST_PUBLIC_KEY}
             - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}

@@ -15,6 +15,7 @@ import os
 from pathlib import Path
 from django.contrib.auth import get_user_model
 import dj_database_url # package that will connect to Heroku database
+import ssl
 
 
 """THIS ENVIRON SETUP HERE WAS THE SOLUTION TO SECRET KEY BECOMING INVISIBLE TO CELERY AS A ENVIRONMENT VARIABLE"""
@@ -157,7 +158,19 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'LeisureInn.wsgi.application'
+
+# REDIS SERVER CREDENTIALS
 REDIS_HOST = os.environ.get('REDIS_HOST')
+REDIS_PORT = os.environ.get('REDIS_PORT')
+REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
+
+# securing access to redis server
+new_context = ssl.SSLContext()
+host = [{
+    'address': f'rediss://{REDIS_HOST}:{REDIS_PORT}',
+    'password': REDIS_PASSWORD, 
+    'ssl': new_context,
+}]
 
 #Configuration for Channels
 ASGI_APPLICATION = "LeisureInn.asgi.application"
@@ -167,8 +180,8 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('redis', 6379)], # uncomment this if below setting doesn't work'
-            # "hosts": [(REDIS_HOST, 30650)] # comment this if it doesn't work'
+            # "hosts": [('redis', 6379)], # localhost redis server
+            "hosts": host # online redis server
         },
     },
 }
