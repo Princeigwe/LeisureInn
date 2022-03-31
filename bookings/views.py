@@ -33,7 +33,7 @@ def booking_process(request, room_id):
             number_of_days = (date_book_check_out - date_book_check_in).days ## getting the number of days from calendar
             amount_to_pay = int(room.room_price) * number_of_days
             booking.amount = amount_to_pay
-            request.session['room_id_data'] = room.id
+            request.session['room_id_data'] = room.id # this will be used in booking payment data
             booking.save()
                 
             # creating booking id session data that will be used for adding reservation to reservation list
