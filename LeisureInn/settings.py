@@ -180,8 +180,8 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('redis', 6379)], # localhost redis server
-            # "hosts": host # online redis server
+            # "hosts": [('redis', 6379)], # localhost redis server
+            "hosts": host # online redis server
         },
     },
 }
@@ -266,9 +266,10 @@ BOOTSTRAP4={
 
 # CELERY BROKER_URL TO CONNECT WITH RABBITMQ
 # CELERY_BROKER_URL = "amqp://guest:guest@0.0.0.0:5672//" # [didn't work on docker container]
-CELERY_BROKER_URL = "amqp://guest:guest@rabbitmq:5672/" # [worked on docker container] # uncomment if below setting doesn't work
-# CELERY_BROKER_URL = os.environ.get('CLOUDAMQP_URL') # [for production]CLOUDAMQP Broker URL from Heroku, comment if if does not work
-# CELERY_RESULT_BACKEND = 'rpc://localhost:5672/' # uncomment this if below doesn't work'
+# CELERY_BROKER_URL = "amqp://guest:guest@rabbitmq:5672/" # [worked on docker container] 
+# CELERY_RESULT_BACKEND = 'rpc://localhost:5672/' 
+
+CELERY_BROKER_URL = os.environ.get('CLOUDAMQP_URL') # [for production]CLOUDAMQP Broker URL from Heroku
 CELERY_RESULT_BACKEND = 'rpc://'
 CELERY_BROKER_POOL_LIMIT = 1
 CELERY_RESULT_PERSISTENT = True
