@@ -2,6 +2,7 @@ from django import forms
 from django.db.models.base import Model
 from bootstrap_datepicker_plus.widgets import DatePickerInput
 from .models import Booking
+from django.contrib.sessions.backends.db import SessionStore
 
 ROOM_OPTIONS = (
     ('SINGLE ROOM', 'Single Room'),
@@ -16,7 +17,9 @@ class CheckingForm(forms.Form):
     check_out = forms.DateField(widget=DatePickerInput(format='%m/%d/%Y'), error_messages={'required': "This field is required"})
 
 
+session = SessionStore()
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['guest_telephone', 'amount']
+        
+        fields = ['guest_telephone']
