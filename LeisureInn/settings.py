@@ -42,14 +42,15 @@ if ENVIRONMENT == 'production':
     CSRF_COOKIE_SECURE = True # to secure csrf cookie in HTTPS connection
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') ## to prevent redirects
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  
-    # EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
 
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-    EMAIL_USE_TLS = True
-    EMAIL_PORT = 587
+
+    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # EMAIL_HOST = 'smtp.gmail.com'
+    # EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+    # EMAIL_USE_TLS = True
+    # EMAIL_PORT = 587
 
 
     # DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
@@ -83,10 +84,6 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic', # whitenoise installed app
     'django.contrib.staticfiles',
     'django.contrib.sites', # for 3rd party account site
-
-    'cloudinary_storage', # cloudinary storage
-    'cloudinary',
-    # "anymail", # app for sending emails
     
     # local apps with Django Channels
     
@@ -112,6 +109,10 @@ INSTALLED_APPS = [
     'storages',
     # "pinax.messages",
     # 'webpush', # for web push notifications 
+
+    'cloudinary_storage', # cloudinary storage
+    'cloudinary',
+    "anymail", # app for sending emails
     
 ]
 
@@ -296,7 +297,7 @@ CELERY_RESULT_PERSISTENT = True
 
 # EMAIL SETTINGS
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # prints mail on comsole
-# DEFAULT_FROM_EMAIL = 'leisureinnco@gmail.com' # the email sender email address
+DEFAULT_FROM_EMAIL = 'leisureinnco@gmail.com' # the email sender email address
 
 
 
@@ -322,9 +323,7 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
-
-#ANYMAIL = {
-#     ...
-#     "SENDINBLUE_API_KEY": "<your v3 API key>",
-# }
-
+# Anymail setting for sendinblue trans. email service
+ANYMAIL = {
+    "SENDINBLUE_API_KEY": os.environ.get('SENDINBLUE_API_KEY'),
+}
