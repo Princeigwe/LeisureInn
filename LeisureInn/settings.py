@@ -50,9 +50,9 @@ if ENVIRONMENT == 'production':
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# celery made me expose this
+SECRET_KEY = '6d@pn5-cdm(j#u9cfpc%ee4%w=e(08zd-d#w$bffb_e6yu&-8C'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))
@@ -273,7 +273,7 @@ BOOTSTRAP4={
 # CELERY_BROKER_URL = "amqp://guest:guest@rabbitmq:5672/" # [worked on docker container] 
 # CELERY_RESULT_BACKEND = 'rpc://localhost:5672/' 
 
-
+# celery made me expose this
 CELERY_BROKER_URL = "amqps://drzmfmjq:zKOJkSm-OZo7Obpd1q_ulUz4APdmXop7@fox.rmq.cloudamqp.com/drzmfmjq" # [for production]CLOUDAMQP Broker URL from Heroku
 CELERY_RESULT_BACKEND = 'rpc://'
 CELERY_BROKER_POOL_LIMIT = 1
