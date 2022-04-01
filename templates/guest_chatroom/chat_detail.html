@@ -273,7 +273,7 @@
 			
             const roomId = JSON.parse(document.getElementById('room-id').textContent);
             const chatRoomSocket = new WebSocket(
-                'ws://' + window.location.host + '/ws/chat/' + roomId + '/'
+                'wss://' + window.location.host + '/ws/chat/' + roomId + '/'
             );
 
             chatRoomSocket.onopen = function(e){
