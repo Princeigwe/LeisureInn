@@ -76,6 +76,9 @@ services:
             - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
             - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
             - VAPID_ADMIN_EMAIL=${VAPID_ADMIN_EMAIL}
+            - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+            - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+            - CLOUDINARY_APP_SECRET=${CLOUDINARY_APP_SECRET}
         # volumes: 
         #     - .:/code
         ports: 

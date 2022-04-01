@@ -25,6 +25,7 @@ whitenoise = "*"
 gunicorn = "*"
 dj-database-url = "*"
 django-storages = {extras = ["dropbox"], version = "*"}
+django-cloudinary-storage = "*"
 
 [dev-packages]
 

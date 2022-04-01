@@ -41,9 +41,11 @@ if ENVIRONMENT == 'production':
     SESSION_COOKIE_SECURE = True # to use session cookie only over HTTPS
     CSRF_COOKIE_SECURE = True # to secure csrf cookie in HTTPS connection
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') ## to prevent redirects
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  
 
-    DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-    DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_ACCESS_TOKEN')
+
+    # DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+    # DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_ACCESS_TOKEN')
 
 
 
@@ -73,6 +75,9 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic', # whitenoise installed app
     'django.contrib.staticfiles',
     'django.contrib.sites', # for 3rd party account site
+
+    'cloudinary_storage', # cloudinary storage
+    'cloudinary',
     
     # local apps with Django Channels
     
@@ -299,3 +304,10 @@ WEBPUSH_SETTINGS = {
 
 DROPBOX_CONSUMER_KEY = os.environ.get('DROPBOX_CONSUMER_KEY')
 DROPBOX_CONSUMER_SECRET = os.environ.get('DROPBOX_CONSUMER_SECRET')
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
