@@ -42,6 +42,7 @@ if ENVIRONMENT == 'production':
     CSRF_COOKIE_SECURE = True # to secure csrf cookie in HTTPS connection
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') ## to prevent redirects
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  
+    # EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
 
 
     # DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
@@ -78,6 +79,7 @@ INSTALLED_APPS = [
 
     'cloudinary_storage', # cloudinary storage
     'cloudinary',
+    # "anymail", # app for sending emails
     
     # local apps with Django Channels
     
@@ -286,7 +288,7 @@ CELERY_RESULT_PERSISTENT = True
 
 
 # EMAIL SETTINGS
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # prints mail on comsole
 DEFAULT_FROM_EMAIL = 'leisureinnco@gmail.com' # the email sender email address
 
 
@@ -311,3 +313,10 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
+
+
+#ANYMAIL = {
+#     ...
+#     "SENDINBLUE_API_KEY": "<your v3 API key>",
+# }
+

@@ -91,7 +91,7 @@ def subscription_payment_successful(request, id):
     payment_id = request.session['payment_id']
     guestCreatedSubscription = GuestCreatedSubscription.objects.create(subscription=subscription, guest=guest, payment_id=payment_id)
     guestCreatedSubscription.save()
-    service_subscription_confirmation_email.delay(guestCreatedSubscription.id) # add task to queue
+    # service_subscription_confirmation_email.delay(guestCreatedSubscription.id) # add task to queue
     return render(request, 'hotel_services/service_payment_successful.html', {
         'subscription': subscription,
     })
