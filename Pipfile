@@ -24,6 +24,7 @@ twisted = "*"
 whitenoise = "*"
 gunicorn = "*"
 dj-database-url = "*"
+django-storages = {extras = ["dropbox"], version = "*"}
 
 [dev-packages]
 

@@ -42,6 +42,9 @@ if ENVIRONMENT == 'production':
     CSRF_COOKIE_SECURE = True # to secure csrf cookie in HTTPS connection
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') ## to prevent redirects
 
+    DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+    DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_ACCESS_TOKEN')
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -92,6 +95,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'allauth',
     'allauth.account', # a 3rd party account site
+    'storages',
     # "pinax.messages",
     # 'webpush', # for web push notifications 
     
@@ -289,3 +293,7 @@ WEBPUSH_SETTINGS = {
     "VAPID_PRIVATE_KEY": os.environ.get('VAPID_PRIVATE_KEY'),
     "VAPID_ADMIN_EMAIL": os.environ.get('VAPID_ADMIN_EMAIL')
 }
+
+
+DROPBOX_CONSUMER_KEY = os.environ.get('DROPBOX_CONSUMER_KEY')
+DROPBOX_CONSUMER_SECRET = os.environ.get('DROPBOX_CONSUMER_SECRET')
