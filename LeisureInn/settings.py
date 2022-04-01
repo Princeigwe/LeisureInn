@@ -273,10 +273,12 @@ BOOTSTRAP4={
 # CELERY_BROKER_URL = "amqp://guest:guest@rabbitmq:5672/" # [worked on docker container] 
 # CELERY_RESULT_BACKEND = 'rpc://localhost:5672/' 
 
-CELERY_BROKER_URL = os.environ.get('CLOUDAMQP_URL') # [for production]CLOUDAMQP Broker URL from Heroku
-CELERY_RESULT_BACKEND = 'rpc://'
-CELERY_BROKER_POOL_LIMIT = 1
-CELERY_RESULT_PERSISTENT = True
+# settings in the celery app
+# CELERY_BROKER_URL = os.environ.get('CLOUDAMQP_URL') # [for production]CLOUDAMQP Broker URL from Heroku
+# CELERY_RESULT_BACKEND = 'rpc://'
+# CELERY_BROKER_POOL_LIMIT = 1
+# CELERY_RESULT_PERSISTENT = True
+
 
 # EMAIL SETTINGS
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
