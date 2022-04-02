@@ -19,4 +19,7 @@ release:  # task to run before each release is deployed
 run:      # run the application
   # web: daphne LeisureInn.asgi:application  
   web: daphne LeisureInn.asgi:application --port $PORT --bind 0.0.0.0
-  celery: celery worker -A LeisureInn -l info
+  celery:
+    command:
+      - celery -A LeisureInn worker -l INFO
+    image: celery
