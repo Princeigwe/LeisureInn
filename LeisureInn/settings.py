@@ -41,16 +41,16 @@ if ENVIRONMENT == 'production':
     SESSION_COOKIE_SECURE = True # to use session cookie only over HTTPS
     CSRF_COOKIE_SECURE = True # to secure csrf cookie in HTTPS connection
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') ## to prevent redirects
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"  
     
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp-relay.sendinblue.com'
-    EMAIL_HOST_USER = 'leisureinnco@gmail.com'
-    EMAIL_HOST_PASSWORD = 'KIGj1FQ8t5Rpb4yV'
-    EMAIL_USE_TLS = True
-    EMAIL_PORT = 587
+    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # EMAIL_HOST = 'smtp-relay.sendinblue.com'
+    # EMAIL_HOST_USER = 'leisureinnco@gmail.com'
+    # EMAIL_HOST_PASSWORD = 'KIGj1FQ8t5Rpb4yV'
+    # EMAIL_USE_TLS = True
+    # EMAIL_PORT = 587
 
-    # EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
 
     # DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
     # DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_ACCESS_TOKEN')
