@@ -8,14 +8,15 @@ from requests.exceptions import ConnectionError
 
 # setting up the celery app
 # app = Celery(app="LeisureInn", broker="amqp://guest:guest@rabbitmq:5672/")
-app = Celery(app="LeisureInn", broker="amqps://drzmfmjq:zKOJkSm-OZo7Obpd1q_ulUz4APdmXop7@fox.rmq.cloudamqp.com/drzmfmjq")
+# app = Celery(app="LeisureInn", broker="amqps://drzmfmjq:zKOJkSm-OZo7Obpd1q_ulUz4APdmXop7@fox.rmq.cloudamqp.com/drzmfmjq")
+app = Celery(app="LeisureInn")
 
 @app.task # this is a celery task
 def service_subscription_confirmation_email(guestCreatedSubscription_id):
     guestCreatedSubscription = GuestCreatedSubscription.objects.get(id=guestCreatedSubscription_id)
     subject = "Subscription Payment Plan Created"
     message = f'We are notifying you that a user with this email:{guestCreatedSubscription.guest.email}, successfully created a subscription payment plan for {guestCreatedSubscription.subscription} {guestCreatedSubscription.subscription.plan} plan'
-    send_mail(subject, message, "admin@leisureinn@gmail.com", [guestCreatedSubscription.guest.email], fail_silently=False)
+    send_mail(subject, message, "leisureinnco@gmail.com", [guestCreatedSubscription.guest.email], fail_silently=False)
 
 
 @app.task  # this is a celery task
