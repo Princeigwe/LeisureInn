@@ -42,7 +42,14 @@ if ENVIRONMENT == 'production':
     CSRF_COOKIE_SECURE = True # to secure csrf cookie in HTTPS connection
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') ## to prevent redirects
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"  
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = 'leisureinnco@gmail.com'
+    EMAIL_HOST_PASSWORD = 'LeisureInnCo98*'
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = 587
+
+# EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"  
     
 
     
@@ -323,6 +330,6 @@ CLOUDINARY_STORAGE = {
 }
 
 # Anymail setting for sendinblue trans. email service
-ANYMAIL = {
-    "SENDINBLUE_API_KEY": os.environ.get('SENDINBLUE_API_KEY'),
-}
+# ANYMAIL = {
+#     "SENDINBLUE_API_KEY": os.environ.get('SENDINBLUE_API_KEY'),
+# }
