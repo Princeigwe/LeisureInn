@@ -19,4 +19,4 @@ release:  # task to run before each release is deployed
 run:      # run the application
   # web: daphne LeisureInn.asgi:application  
   web: daphne LeisureInn.asgi:application --port $PORT --bind 0.0.0.0
-  worker: celery worker --app=tasks.app
+  worker: python manage.py celery worker --loglevel=info
