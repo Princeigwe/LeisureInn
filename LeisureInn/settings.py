@@ -44,18 +44,18 @@ if ENVIRONMENT == 'production':
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"  
     
-    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    # EMAIL_HOST = 'smtp-relay.sendinblue.com'
-    # EMAIL_HOST_USER = 'leisureinnco@gmail.com'
-    # EMAIL_HOST_PASSWORD = 'KIGj1FQ8t5Rpb4yV'
-    # EMAIL_USE_TLS = True
-    # EMAIL_PORT = 587
 
+    
 
-    # DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-    # DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_ACCESS_TOKEN')
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp-relay.sendinblue.com'
+# EMAIL_HOST_USER = 'leisureinnco@gmail.com'
+# EMAIL_HOST_PASSWORD = 'KIGj1FQ8t5Rpb4yV'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
 
-
+# DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+# DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_ACCESS_TOKEN')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
