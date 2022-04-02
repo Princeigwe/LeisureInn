@@ -42,12 +42,7 @@ if ENVIRONMENT == 'production':
     CSRF_COOKIE_SECURE = True # to secure csrf cookie in HTTPS connection
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') ## to prevent redirects
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = 'leisureinnco@gmail.com'
-    EMAIL_HOST_PASSWORD = 'LeisureInnCo98*'
-    EMAIL_USE_TLS = True
-    EMAIL_PORT = 587
+
 
 # EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"  
     
@@ -302,9 +297,15 @@ CELERY_RESULT_PERSISTENT = True
 
 
 # EMAIL SETTINGS
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # prints mail on comsole
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # prints mail on comsole
 DEFAULT_FROM_EMAIL = 'leisureinnco@gmail.com' # the email sender email address
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'leisureinnco@gmail.com'
+EMAIL_HOST_PASSWORD = 'LeisureInnCo98*'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
 
 
 # FLUTTERWAVE KEYS
