@@ -9,7 +9,7 @@ setup:    # the addons that will be added for the project on heroku
 build:    # build the Dockerfile
   docker: 
     web: Dockerfile
-    worker: Dockerfile
+    celery: Dockerfile
 
 release:  # task to run before each release is deployed
   image: web
@@ -19,4 +19,4 @@ release:  # task to run before each release is deployed
 run:      # run the application
   # web: daphne LeisureInn.asgi:application  
   web: daphne LeisureInn.asgi:application --port $PORT --bind 0.0.0.0
-  worker: celery worker -A LeisureInn -l info
+  celery: celery worker -A LeisureInn -l info
