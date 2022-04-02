@@ -42,17 +42,15 @@ if ENVIRONMENT == 'production':
     CSRF_COOKIE_SECURE = True # to secure csrf cookie in HTTPS connection
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') ## to prevent redirects
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  
-    EMAIL_BACKEND = "anymail.backends.mailjet.EmailBackend"
+    
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp-relay.sendinblue.com'
+    EMAIL_HOST_USER = 'leisureinnco@gmail.com'
+    EMAIL_HOST_PASSWORD = 'KIGj1FQ8t5Rpb4yV'
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = 587
 
     # EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
-
-    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    # EMAIL_HOST = 'smtp.gmail.com'
-    # EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-    # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-    # EMAIL_USE_TLS = True
-    # EMAIL_PORT = 587
-
 
     # DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
     # DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_ACCESS_TOKEN')
@@ -326,7 +324,5 @@ CLOUDINARY_STORAGE = {
 
 # Anymail setting for sendinblue trans. email service
 ANYMAIL = {
-    # "SENDINBLUE_API_KEY": os.environ.get('SENDINBLUE_API_KEY'),
-    "MAILJET_API_KEY": os.environ.get('MAILJET_API_KEY'),
-    "MAILJET_SECRET_KEY": os.environ.get('MAILJET_SECRET_KEY')
+    "SENDINBLUE_API_KEY": os.environ.get('SENDINBLUE_API_KEY'),
 }
