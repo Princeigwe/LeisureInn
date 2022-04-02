@@ -326,7 +326,7 @@ CLOUDINARY_STORAGE = {
 
 # Anymail setting for sendinblue trans. email service
 ANYMAIL = {
-    "SENDINBLUE_API_KEY": os.environ.get('SENDINBLUE_API_KEY'),
+    # "SENDINBLUE_API_KEY": os.environ.get('SENDINBLUE_API_KEY'),
     "MAILJET_API_KEY": os.environ.get('MAILJET_API_KEY'),
     "MAILJET_SECRET_KEY": os.environ.get('MAILJET_SECRET_KEY')
 }
