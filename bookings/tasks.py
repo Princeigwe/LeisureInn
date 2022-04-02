@@ -3,6 +3,7 @@ from rooms.models import Room
 from django.core.mail import send_mail
 from .models import Booking
 
+# app = Celery(app="LeisureInn", broker="amqp://guest:guest@rabbitmq:5672/")
 app = Celery(app="LeisureInn", broker="amqps://drzmfmjq:zKOJkSm-OZo7Obpd1q_ulUz4APdmXop7@fox.rmq.cloudamqp.com/drzmfmjq")
 
 @app.task # this is a celery task
