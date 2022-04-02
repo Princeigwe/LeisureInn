@@ -9,6 +9,7 @@ setup:    # the addons that will be added for the project on heroku
 build:    # build the Dockerfile
   docker: 
     web: Dockerfile
+    worker: Dockerfile
 
 release:  # task to run before each release is deployed
   image: web
