@@ -330,6 +330,17 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+    }
+}
+
 # Anymail setting for sendinblue trans. email service
 # ANYMAIL = {
 #     "SENDINBLUE_API_KEY": os.environ.get('SENDINBLUE_API_KEY'),

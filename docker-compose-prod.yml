@@ -84,6 +84,7 @@ services:
             - SENDINBLUE_API_KEY=${SENDINBLUE_API_KEY}
             - MAILJET_API_KEY=${MAILJET_API_KEY}
             - MAILJET_SECRET_KEY=${MAILJET_SECRET_KEY}
+            - REDIS_URL=${REDIS_URL}
         # volumes: 
         #     - .:/code
         ports: 
