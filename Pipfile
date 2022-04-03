@@ -27,6 +27,7 @@ dj-database-url = "*"
 django-storages = {extras = ["dropbox"], version = "*"}
 django-cloudinary-storage = "*"
 django-anymail = "*"
+django-redis = "*"
 
 [dev-packages]
 

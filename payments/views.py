@@ -4,10 +4,12 @@ from django.conf import settings
 from bookings.models import Booking
 from rooms.models import Room
 from guest_reservations.models import GuestReservationList, ReservationItem
+from django.views.decorators.cache import cache_page
 
-# Create your views here.
+CACHE_TIME = 60 * 15 # setting cache time to 15 minutes
 
 #  payment process with flutterwave payment parameters
+@cache_page(CACHE_TIME)
 def payment_process(request, booking_id):
     publicKey = settings.FLUTTERWAVE_TEST_PUBLIC_KEY
     booking = get_object_or_404(Booking, id=booking_id)
@@ -26,6 +28,7 @@ def payment_process(request, booking_id):
                 }
     )
 
+@cache_page(CACHE_TIME)
 def payment_successful(request, id):
     booking = get_object_or_404(Booking, id=id)
     booking.paid = True
@@ -54,5 +57,6 @@ def payment_successful(request, id):
     
     return render(request, 'payment/payment_successful.html', {'id':id})
 
+@cache_page(CACHE_TIME)
 def payment_failed(request):
     return render(request, 'payment/payment_failed.html')
