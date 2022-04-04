@@ -13,15 +13,11 @@ from django.views.decorators.http import require_POST
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
-from django.views.decorators.cache import cache_page
-
 from users.tasks import send_user_email
 
 # Create your views here.
 
-CACHE_TIME = 60 * 15 # setting cache time to 15 minutes
 
-@cache_page(CACHE_TIME)
 @login_required
 def rooms(request):
     user = request.user
@@ -33,7 +29,6 @@ def rooms(request):
     return render(request,'guest_chatroom/chat_list.html', {'rooms': rooms})
 
 
-@cache_page(CACHE_TIME)
 @login_required
 def room_messages(request, room_id ):
     if request.user.first_name == '' and request.user.last_name == '': 
@@ -46,7 +41,6 @@ def room_messages(request, room_id ):
         return render(request, 'guest_chatroom/chat_detail.html', {'room_id': room.id, 'room':room, 'roomMessages': roomMessages, 'user_first_name':user_first_name})
 
 
-@cache_page(CACHE_TIME)
 @login_required
 def guest_chatRoom_user_bio_and_trans_data(request, room_id): # getting user bio data for now
     room = get_object_or_404(GuestChatRoom, id=room_id)

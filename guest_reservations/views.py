@@ -3,12 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import ReservationItem, GuestReservationList
 from bookings.models import Booking
-from django.views.decorators.cache import cache_page
-
-CACHE_TIME = 60 * 15 # setting cache time to 15 minutes
 
 
-@cache_page(CACHE_TIME)
 @login_required
 def all_reservations(request):
     """ function to get all reservations of the logged in guest """
@@ -26,7 +22,6 @@ def all_reservations(request):
 #     return redirect('guest_reservations:all_reservations')
 
 
-@cache_page(CACHE_TIME)
 @login_required
 def delete_reservation(request, reservation_id):
     reservation = get_object_or_404(ReservationItem, id=reservation_id)

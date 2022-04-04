@@ -286,11 +286,11 @@ BOOTSTRAP4={
 
 # CELERY BROKER_URL TO CONNECT WITH RABBITMQ
 # CELERY_BROKER_URL = "amqp://guest:guest@0.0.0.0:5672//" # [didn't work on docker container]
-# CELERY_BROKER_URL = "amqp://guest:guest@rabbitmq:5672/" # [worked on docker container] 
+CELERY_BROKER_URL = "amqp://guest:guest@rabbitmq:5672/" # [worked on docker container] 
 # CELERY_RESULT_BACKEND = 'rpc://localhost:5672/' 
 
 
-CELERY_BROKER_URL = "amqps://drzmfmjq:zKOJkSm-OZo7Obpd1q_ulUz4APdmXop7@fox.rmq.cloudamqp.com/drzmfmjq" # [for production]CLOUDAMQP Broker URL from Heroku
+# CELERY_BROKER_URL = "amqps://drzmfmjq:zKOJkSm-OZo7Obpd1q_ulUz4APdmXop7@fox.rmq.cloudamqp.com/drzmfmjq" # [for production]CLOUDAMQP Broker URL from Heroku
 CELERY_RESULT_BACKEND = 'rpc://'
 CELERY_BROKER_POOL_LIMIT = 1
 CELERY_RESULT_PERSISTENT = True

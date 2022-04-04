@@ -77,11 +77,11 @@ http://www.templatemo.com/tm-475-holiday
                                         
                                         {% if user.is_authenticated %}
                                         <li>
-                                            <a href="#"> Change Password </a>
+                                            <a href=" {% url 'account_change_password' %} "> Change Password </a>
                                         </li>
                                         {% else %}
                                         <li>
-                                            <a href="#"> Reset Password </a>
+                                            <a href=" {% url 'account_reset_password' %} "> Reset Password </a>
                                         </li>
                                         {% endif %}
                                             

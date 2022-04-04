@@ -6,13 +6,9 @@ import datetime
 from .tasks import booking_confirmation_email
 from django.contrib.auth.decorators import login_required
 from guest_reservations.models import ReservationItem, GuestReservationList
-from django.views.decorators.cache import cache_page
 
 
-CACHE_TIME = 60 * 15 # setting cache time to 15 minutes
 
-
-@cache_page(CACHE_TIME)
 @login_required
 def booking_process(request, room_id):
     room = get_object_or_404(Room, id=room_id)
@@ -50,12 +46,10 @@ def booking_process(request, room_id):
         form = BookingForm()
     return render(request, 'booking/booking_form.html', {'form': form})
 
-@cache_page(CACHE_TIME)
 @login_required
 def booking_failed(request):
     return render(request, 'booking/booking_failed.html')
 
-@cache_page(CACHE_TIME)
 @login_required
 def booking_successful(request):
     return render(request, 'booking/booking_successful.html')

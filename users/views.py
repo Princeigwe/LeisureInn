@@ -4,12 +4,8 @@ from guest_chatRoom.models import GuestChatRoom
 from users.models import CustomUser
 from .forms import UserEditForm
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.cache import cache_page
 
 
-CACHE_TIME = 60 * 15 # setting cache time to 15 minutes
-
-@cache_page(CACHE_TIME)
 @login_required
 def update_user_detail(request):
     user = request.user

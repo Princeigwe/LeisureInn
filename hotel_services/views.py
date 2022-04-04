@@ -7,9 +7,6 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
 from .tasks import service_subscription_confirmation_email, one_time_payment_confirmation_email, subscription_payment_API_call, cancel_subscription_payment_API_call
-from django.views.decorators.cache import cache_page
-
-CACHE_TIME = 60 * 15 # setting cache time to 15 minutes
 
 flutterwave_adapter = HTTPAdapter(max_retries=5)
 session = requests.Session()
@@ -18,15 +15,13 @@ session.mount("https://api.ravepay.co/v2/gpx/paymentplans/create", flutterwave_a
 
 # Create your views here.
 
-@cache_page(CACHE_TIME)
 def all_services_page(request):
     """all services page"""
     services = Service.objects.all()
     return render(request, 'hotel_services/hotel_services.html', {'services': services})
 
 
-#  get another template for service detail
-@cache_page(CACHE_TIME)
+
 def service_subscriptions(request, service_id, service_name):
     """getting subscription plans for service"""
     service = get_object_or_404(Service, name=service_name, id=service_id)
@@ -34,7 +29,6 @@ def service_subscriptions(request, service_id, service_name):
     return render(request, 'hotel_services/hotel_services_detail.html', {'subscriptions': subscriptions})
 
 
-@cache_page(CACHE_TIME)
 @login_required
 def subscription_payment_process(request, subscription_id):
     """this is the subscription creation process.
@@ -90,7 +84,6 @@ def subscription_payment_process(request, subscription_id):
     })
 
 
-@cache_page(CACHE_TIME)
 @login_required
 def subscription_payment_successful(request, id):
     subscription = get_object_or_404(Subscription, id=id)
@@ -104,7 +97,6 @@ def subscription_payment_successful(request, id):
     })
 
 
-@cache_page(CACHE_TIME)
 @login_required
 def fetch_guest_subscriptions(request):
     """fetching all the created subscriptions of the guest"""
@@ -113,7 +105,6 @@ def fetch_guest_subscriptions(request):
     return render(request, 'hotel_services/guest_created_subscriptions.html', {'guestCreatedSubscriptions': guestCreatedSubscriptions})
 
 
-@cache_page(CACHE_TIME)
 @login_required
 def cancel_subscription_payment_plan(request, id):
     """this is the flutterwave cancel subscription recurring payment process"""
@@ -131,7 +122,6 @@ def cancel_subscription_payment_plan(request, id):
     return render(request, 'hotel_services/service_payment_cancelled.html')
 
 
-@cache_page(CACHE_TIME)
 def one_time_services(request):
     """this is a view to create services for one time payment,
     the current service page shows link for the subscription plans
@@ -140,7 +130,6 @@ def one_time_services(request):
     return render(request, 'hotel_services/one_time_services.html', {'services': services})
 
 
-@cache_page(CACHE_TIME)
 def one_time_service_payment_process(request, service_id):
     """this is the process for one time service payment"""
     now = datetime.now()
@@ -164,7 +153,6 @@ def one_time_service_payment_process(request, service_id):
     )
 
 
-@cache_page(CACHE_TIME)
 def one_time_service_payment_successful(request, id):
     """this function creates a GuestOneTimeServicePayment to keep track of the
         the one time payments guest made  after transaction is successful from the
@@ -180,6 +168,5 @@ def one_time_service_payment_successful(request, id):
     return render(request, 'hotel_services/one_time_service_payment_successful.html')
 
 
-@cache_page(CACHE_TIME)
 def one_time_service_payment_failed(request):
     return render(request, 'hotel_services/one_time_service_payment_failed.html')

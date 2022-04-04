@@ -37,8 +37,8 @@
                             <div class="tm-search-box effect2">
 
                                 <form action="" method="post" class="hotel-search-form">
-                                    {% csrf_token %}
                                     <div  class="tm-form-inner">
+                                        {% csrf_token %}
                                         {{form|crispy}}
                                     </div>
                                     <div class="form-group tm-yellow-gradient-bg text-center">
