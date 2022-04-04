@@ -74,12 +74,18 @@ http://www.templatemo.com/tm-475-holiday
                                 <a href="#">Account</a>
                                 <div class="dropdown-menu-item">
                                     <ul>
+                                        
+                                        {% if user.is_authenticated %}
                                         <li>
                                             <a href="#"> Change Password </a>
                                         </li>
+                                        {% else %}
                                         <li>
                                             <a href="#"> Reset Password </a>
                                         </li>
+                                        {% endif %}
+                                            
+                                        
                                         <li>
                                             
                                             {% if user.is_authenticated %}

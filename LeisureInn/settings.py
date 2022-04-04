@@ -64,7 +64,7 @@ if ENVIRONMENT == 'production':
 
 
 
-SECRET_KEY = '6d@pn5-cdm(j#u9cfpc%ee4%w=e(08zd-d#w$bffb_e6yu&54*'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))
