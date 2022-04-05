@@ -44,18 +44,6 @@ if ENVIRONMENT == 'production':
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
-# EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"  
-    
-
-    
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp-relay.sendinblue.com'
-# EMAIL_HOST_USER = 'leisureinnco@gmail.com'
-# EMAIL_HOST_PASSWORD = 'KIGj1FQ8t5Rpb4yV'
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
-
 # DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 # DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_ACCESS_TOKEN')
 
@@ -330,18 +318,3 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
-
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": os.environ.get('REDIS_URL'),
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient"
-#         },
-#     }
-# }
-
-# Anymail setting for sendinblue trans. email service
-# ANYMAIL = {
-#     "SENDINBLUE_API_KEY": os.environ.get('SENDINBLUE_API_KEY'),
-# }
