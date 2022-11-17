@@ -7,8 +7,8 @@ from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
 
 # setting up the celery app
-# app = Celery(app="LeisureInn", broker="amqp://guest:guest@rabbitmq:5672/")
-app = Celery(app="LeisureInn", broker="amqps://drzmfmjq:zKOJkSm-OZo7Obpd1q_ulUz4APdmXop7@fox.rmq.cloudamqp.com/drzmfmjq")
+app = Celery(app="LeisureInn", broker="amqp://guest:guest@rabbitmq:5672/") # for development
+# app = Celery(app="LeisureInn", broker="amqps://drzmfmjq:zKOJkSm-OZo7Obpd1q_ulUz4APdmXop7@fox.rmq.cloudamqp.com/drzmfmjq") #for production
 
 @app.task # this is a celery task
 def service_subscription_confirmation_email(guestCreatedSubscription_id):

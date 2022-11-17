@@ -3,8 +3,8 @@ from rooms.models import Room
 from django.core.mail import send_mail
 from .models import Booking
 
-# app = Celery(app="LeisureInn", broker="amqp://guest:guest@rabbitmq:5672/")
-app = Celery(app="LeisureInn", broker="amqps://drzmfmjq:zKOJkSm-OZo7Obpd1q_ulUz4APdmXop7@fox.rmq.cloudamqp.com/drzmfmjq")
+app = Celery(app="LeisureInn", broker="amqp://guest:guest@rabbitmq:5672/") # for development
+# app = Celery(app="LeisureInn", broker="amqps://drzmfmjq:zKOJkSm-OZo7Obpd1q_ulUz4APdmXop7@fox.rmq.cloudamqp.com/drzmfmjq") # for prosuction
 
 @app.task # this is a celery task
 def booking_confirmation_email(room_id, booking_id):
