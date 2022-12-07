@@ -134,6 +134,7 @@ ACCOUNT_SESSION_REMEMBER = True # to remember user login session
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'rooms:home' # redirect url after email confirmation
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware', # middleware to serve static files
@@ -189,8 +190,8 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            # "hosts": [('redis', 6379)], # localhost redis server
-            "hosts": host # online redis server
+            "hosts": [('redis', 6379)], # localhost redis server
+            # "hosts": host # online redis server
         },
     },
 }
@@ -289,12 +290,20 @@ CELERY_RESULT_PERSISTENT = True
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # prints mail on comsole
 DEFAULT_FROM_EMAIL = 'leisureinnco@gmail.com' # the email sender email address
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
+EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
+
+ANYMAIL = {
+    "SENDINBLUE_API_KEY": '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',
+}
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# # EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST = 'smtp-relay.sendinblue.com'
+# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+# EMAIL_HOST_PASSWORD = 'KIGj1FQ8t5Rpb4yV'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
 
 
 # FLUTTERWAVE KEYS

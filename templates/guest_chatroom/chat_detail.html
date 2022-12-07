@@ -273,8 +273,8 @@
 			
             const roomId = JSON.parse(document.getElementById('room-id').textContent);
             const chatRoomSocket = new WebSocket(
-				// 'ws://' + window.location.host + '/ws/chat/' + roomId + '/' //to run on localhost server
-                'wss://' + window.location.host + '/ws/chat/' + roomId + '/'
+				'ws://' + window.location.host + '/ws/chat/' + roomId + '/' //to run on localhost server
+                // 'wss://' + window.location.host + '/ws/chat/' + roomId + '/'
             );
 
             chatRoomSocket.onopen = function(e){

@@ -58,15 +58,15 @@ services:
         build: .
         container_name: 'LeisureInn_web'
         # command: python /code/manage.py runserver 0.0.0.0:8000
-        command: daphne -b 0.0.0.0 -p 8000 LeisureInn.asgi:application # running the application with Daphne
+        command: daphne -b 0.0.0.0 -p 3000 LeisureInn.asgi:application # running the application with Daphne
         environment: 
             - DEBUG=1
             - ENVIRONMENT=development
             - SECRET_KEY=${SECRET_KEY}
             - CLOUDAMQP_URL=${CLOUDAMQP_URL}
-            - REDIS_HOST=${REDIS_HOST}
-            - REDIS_PORT=${REDIS_PORT}
-            - REDIS_PASSWORD=${REDIS_PASSWORD}
+            # - REDIS_HOST=${REDIS_HOST}
+            # - REDIS_PORT=${REDIS_PORT}
+            # - REDIS_PASSWORD=${REDIS_PASSWORD}
             - FLUTTERWAVE_TEST_SECRET_KEY=${FLUTTERWAVE_TEST_SECRET_KEY}
             - FLUTTERWAVE_TEST_PUBLIC_KEY=${FLUTTERWAVE_TEST_PUBLIC_KEY}
             - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
@@ -78,11 +78,11 @@ services:
             - EMAIL_HOST_USER=${EMAIL_HOST_USER}
             - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
             - SENDINBLUE_API_KEY=${SENDINBLUE_API_KEY}
-            - REDIS_URL=${REDIS_URL}
+            # - REDIS_URL=${REDIS_URL}
         volumes: 
             - .:/code
         ports: 
-            - 8000:8000
+            - 3000:3000
         depends_on: 
             - db
         links: 
