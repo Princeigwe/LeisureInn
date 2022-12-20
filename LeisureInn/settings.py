@@ -296,15 +296,6 @@ ANYMAIL = {
     "SENDINBLUE_API_KEY": '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',
 }
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# # EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST = 'smtp-relay.sendinblue.com'
-# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-# # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-# EMAIL_HOST_PASSWORD = 'KIGj1FQ8t5Rpb4yV'
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
-
 
 # FLUTTERWAVE KEYS
 FLUTTERWAVE_TEST_SECRET_KEY = os.environ.get('FLUTTERWAVE_TEST_SECRET_KEY')
